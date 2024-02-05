@@ -6,6 +6,7 @@ public class lesson01 {
         //sout
         System.out.println("Lesson 01");
         System.out.println("Внесено изменение");
+
     }
 
 }
