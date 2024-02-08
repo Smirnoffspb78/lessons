@@ -20,12 +20,13 @@ public class Lesson02HomeWork {
         int sumOfTheNumber = positiveInteger / 10 + positiveInteger - positiveInteger / 10 * 10;
         System.out.println("Задание 3 \nСумма цифр положительного двузначного числа " + sumOfTheNumber + "\n");
         //4. Поменять значения 2х переменных местами, используя арифметические операторы. Результат вывести в консоль.
-        int var1 = 30;
-        int var2 = 150;
-        var1 = var2 / var1;
-        var2 = var2 / var1;
-        var1 = var2 * var1;
+        double var1 = 0;
+        double var2 = 10;
+        var1=var2-var1;
+        var2=var2-var1;
+        var1=var1+var2;
         System.out.println("Задание 4 \nvar2=" + var2 + "\n" + "var1=" + var1 + "\n");
+
         //5. Разобрать, как работает оператор остаток от деления '%'
         double remainderOfDivision = 10 % 3.33;
         System.out.println("Задание 5 \nОстаток от деления возвращает значение, которое является разницей делимого числа и делителя помноженного " +
@@ -36,8 +37,9 @@ public class Lesson02HomeWork {
         int num01 = 3; int num02 = 2; int result = num01 / num02; var doubleResult01 = (double) (num01 / num02);
 
         ОТВЕТ: doubleResult01 будет иметь тип double. В примере выше используется явное приведение типов (значение переменной типа int приводится к типу double)
-         т.к. результат вычисления всегда повышается до наибольшего операнда, то и результат doubleResult01 будет иметь тип double, doubleResult01=1.5
-         В случае отсутсвия явного приведения типов, произошла бы потеря данных, т.к. var определился бы, как int.
+         т.к. результат вычисления всегда повышается до наибольшего операнда, то и результат doubleResult01 будет иметь тип double, doubleResult01=1.0
+         т.к. приведение типов реализуется для вычесленного выражения, а не для переменной. В процессе вычисления происходит потеря данных
          */
+
     }
 }
