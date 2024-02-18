@@ -7,19 +7,16 @@ public class BubbleMethod {
     public static int[] bubbleMethod(int[] arr) {
         var count = 0;
         int temp;
-        boolean check;
-        for (int i = 0; i < arr.length; i++) {
-            check = true;
+        boolean check = true;
+        while (check) {
+            check = false;
             for (int j = 0; j < arr.length - count - 1; j++) {
                 if (arr[j] > arr[j + 1]) {
                     temp = arr[j];
                     arr[j] = arr[j + 1];
                     arr[j + 1] = temp;
-                    check = false;
+                    check = true;
                 }
-            }
-            if (check) {
-                break;
             }
             count++;
         }
