@@ -18,8 +18,8 @@ public class SlidingWindow {
         if (arr == null) {
             LOGGER.warning("В метод slidingWindow передан null");
             return 0;
-        } else if (arr.length < 4) {
-            LOGGER.warning("В метод slidingWindow передан массив с длинной меньше 4");
+        } else if (arr.length < NUMBER) {
+            LOGGER.warning("В метод slidingWindow передан массив с длинной меньше " + NUMBER);
             return 0;
         } else {
             var maxSumma = 0;
