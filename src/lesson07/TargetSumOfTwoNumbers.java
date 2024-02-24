@@ -5,7 +5,7 @@ import java.util.logging.Logger;
 
 
 /**
- * Класс, реализующий метод, который возвращает 2 числа, дающих целевую сумму
+ * Класс, реализующий метод, который возвращает 2 числа, дающих целевую сумму.
  */
 public class TargetSumOfTwoNumbers {
     private TargetSumOfTwoNumbers() {
@@ -13,15 +13,22 @@ public class TargetSumOfTwoNumbers {
 
     private static final Logger LOGGER = Logger.getLogger(TargetSumOfTwoNumbers.class.getName());
 
+    /**
+     *
+     * @param target Целевое число, которое необходимо получить из двух элементов массива.
+     * @param arr Исходный массив
+     * @return массив из двух чисул, дающих target или массив из длинной 2, инициализированный по умолчанию,
+     * в случае, если число отсутсвует или получены неверные исходные данные.
+     */
     public static int[] targetSumOfTwoNumbers(int target, int[] arr) {
+        int[] result = new int[2];
         if (arr == null) {
             LOGGER.warning("В метод targetSumOfTwoNumbers передан null");
-            return new int[2];
+            return result;
         } else if (arr.length < 2) {
             LOGGER.warning("В метод targetSumOfTwoNumbers передеан массив длинной меньше 2");
-            return new int[2];
+            return result;
         }
-        int[] result = new int[2];
         int[] sortedArray = arr.clone();
         Arrays.sort(sortedArray);
         var leftPointer = 0;
@@ -30,7 +37,7 @@ public class TargetSumOfTwoNumbers {
         var check = true;
         if (!checkMoreTarget) {
             LOGGER.info("Массив не содержит чисел, дающих %d".formatted(target));
-            return new int[2];
+            return result;
         }
         while (leftPointer < rightPointer && check) {
             if (sortedArray[leftPointer] + sortedArray[rightPointer] == target) {
@@ -45,10 +52,9 @@ public class TargetSumOfTwoNumbers {
         }
         if (!check) {
             LOGGER.info("Два числа, дающих %d: %s".formatted(target, Arrays.toString(result)));
-            return result;
         } else {
             LOGGER.info("Массив не содержит чисел, дающих %d".formatted(target));
-            return new int[2];
         }
+        return result;
     }
 }
