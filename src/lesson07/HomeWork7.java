@@ -20,7 +20,7 @@ public class HomeWork7 {
         int[] resultSortingUniqueItems = sortingUniqueItems(arr2);
         int[] uniqueSortingWithThreeCycles = uniqueSortingWithThreeCycles(arr2);
         int[] uniqueSortingWithCollection = uniqueSortingWithCollection(arr2);
-        int[] uniqueSortingWithTwoArray=uniqueSortingWithTwoArray(arr2);
-        int[] uniqueSortingWithIndex=uniqueSortingWithIndex(arr2);
+        int[] uniqueSortingWithTwoArray = uniqueSortingWithTwoArray(arr2);
+        int[] uniqueSortingWithIndex = uniqueSortingWithIndex(arr2);
     }
 }

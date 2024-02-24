@@ -14,9 +14,8 @@ public class TargetSumOfTwoNumbers {
     private static final Logger LOGGER = Logger.getLogger(TargetSumOfTwoNumbers.class.getName());
 
     /**
-     *
      * @param target Целевое число, которое необходимо получить из двух элементов массива.
-     * @param arr Исходный массив
+     * @param arr    Исходный массив
      * @return массив из двух чисул, дающих target или массив из длинной 2, инициализированный по умолчанию,
      * в случае, если число отсутсвует или получены неверные исходные данные.
      */
