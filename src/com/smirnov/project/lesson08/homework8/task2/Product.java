@@ -1,13 +1,9 @@
 package com.smirnov.project.lesson08.homework8.task2;
 
-import java.util.logging.Logger;
-
 /**
- * Класс, который создает именованные продукты с количественными характеритками
- * белков, жиров, углеводов и каллорий.
+ * Класс, характеризующий соедржание в продуктах белков, жиров, углеводов и каллорий
  */
 public class Product {
-    private static final Logger LOGGER = Logger.getLogger(Product.class.getName());
     /**
      * Название продукта.
      */
@@ -25,13 +21,9 @@ public class Product {
      */
     private double carbohydrates;
     /**
-     * Количество калорий.
+     * Количество калорий, [Ккал/100г].
      */
     private double calories;
-    private static final double ERROR_CHARACTER = 1.0 / 0;
-
-    private Product() {
-    }
 
     /**
      * Вспомогательный конструктор, который создает имя продукта и количество каллорий.
@@ -40,7 +32,7 @@ public class Product {
      * @param calories    Калории
      */
     private Product(String nameProduct, double calories) {
-        if (nameProduct == null || nameProduct.isEmpty()) {
+        if (nameProduct == null || nameProduct.isBlank()) {
             throw new IllegalArgumentException("Наименование продукта не может быть пустым или быть null.");
         }
         this.nameProduct = nameProduct;
@@ -94,12 +86,12 @@ public class Product {
      * Вспомогательный метод, проверяющий правильность введенных значений белков, жиров, углеводов и калорий
      *
      * @param characterProduct Один из парметров продукта: белки, жиры, углеводы или калории
-     * @return Значение введенного продукта или infinity, если значение меньше 0
+     * @return Значение введенного продукта
+     * @throws IllegalArgumentException если характеристика продукта отрицательная
      */
-    private double checkValueCharacterProduct(double characterProduct) {
+    private static double checkValueCharacterProduct(double characterProduct) {
         if (characterProduct < 0) {
-            characterProduct = ERROR_CHARACTER;
-            LOGGER.warning("Проверьте правильность введенных значений характеристик продукта");
+            throw new IllegalArgumentException("Характеристики продукта не могут быть ортицательными");
         }
         return characterProduct;
     }

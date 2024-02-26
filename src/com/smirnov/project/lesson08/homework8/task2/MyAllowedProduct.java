@@ -1,9 +1,9 @@
 package com.smirnov.project.lesson08.homework8.task2;
 
-import java.util.logging.Logger;
-
+/**
+ * Класс допустимых значений белков, жиров, углеводов, калорий
+ */
 public class MyAllowedProduct {
-    private static final Logger LOGGER = Logger.getLogger(MyAllowedProduct.class.getName());
     /**
      * Максимально допустимое количество белков.
      */
@@ -17,11 +17,9 @@ public class MyAllowedProduct {
      */
     private double maxCarbohydrates;
     /**
-     * Максимально допустимое количество калорий.
+     * Максимально допустимое количество калорий, [Ккал/100г].
      */
     private double maxCalories;
-
-    private static final double ERROR_CHARACTER = 1.0 / 0;
 
     /**
      * Вспомогательный метод, проверяющий правильность введенных занчений продукта.
@@ -30,9 +28,8 @@ public class MyAllowedProduct {
      * @return Допустимое значение продукта или 0, если characterProduct<0.
      */
     private double checkValueCharacterProduct(double characterProduct) {
-        if (characterProduct < 0 || characterProduct == ERROR_CHARACTER) {
-            characterProduct = 0;
-            LOGGER.warning("Проверьте правильность допустимых введенных значений продукта.");
+        if (characterProduct < 0) {
+            throw new IllegalArgumentException("Допустимые характеристики не могут быть отрицательными");
         }
         return characterProduct;
     }
@@ -63,8 +60,39 @@ public class MyAllowedProduct {
         boolean checkProduct = maxCalories >= product.getCalories() && maxCarbohydrates >= product.getCarbohydrates()
                 && maxFats >= product.getFats() && maxSquirrels >= product.getSquirrels();
         if (!checkProduct) {
-            LOGGER.info("%s не подходит к вашему рациону.".formatted(product.getNameProduct()));
+            System.out.printf("%s не подходит к вашему рациону.%n", product.getNameProduct());
         }
         return checkProduct;
+    }
+    public double getMaxSquirrels() {
+        return maxSquirrels;
+    }
+
+    public void setMaxSquirrels(double maxSquirrels) {
+        this.maxSquirrels = checkValueCharacterProduct(maxSquirrels);
+    }
+
+    public double getMaxFats() {
+        return maxFats;
+    }
+
+    public void setMaxFats(double maxFats) {
+        this.maxFats = checkValueCharacterProduct(maxFats);
+    }
+
+    public double getMaxCarbohydrates() {
+        return maxCarbohydrates;
+    }
+
+    public void setMaxCarbohydrates(double maxCarbohydrates) {
+        this.maxCarbohydrates = checkValueCharacterProduct(maxCarbohydrates);
+    }
+
+    public double getMaxCalories() {
+        return maxCalories;
+    }
+
+    public void setMaxCalories(double maxCalories) {
+        this.maxCalories = checkValueCharacterProduct(maxCalories);
     }
 }
