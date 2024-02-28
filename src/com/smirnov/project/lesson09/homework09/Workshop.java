@@ -15,10 +15,6 @@ public class Workshop {
      */
     private int counter;
     /**
-     * Вспомогательный массив для получения информации.
-     */
-    private Vehicle[] copyVehicles;
-    /**
      * Размер мастерской (количество одновременно ремонтируемых транспортных средств).
      */
     private final int lengthWorkshop;
@@ -26,15 +22,16 @@ public class Workshop {
     /**
      * Конструктор для создания мастерской
      *
-     * @param lengthWorkshop - размер мастерской (количество одновременно ремонтируемых транспортных средств).
-     * @throws IllegalArgumentException - если дина Vehicle не положительная
+     * @param lengthWorkshop - Размер мастерской (количество одновременно ремонтируемых транспортных средств).
+     * @throws IllegalArgumentException - Если размер мастерской неположительный
      */
 
     public Workshop(int lengthWorkshop) {
-        if (lengthWorkshop < 1) throw new IllegalArgumentException("Длина массива Vehicle не может быть отрицательной");
+        if (lengthWorkshop < 1) {
+            throw new IllegalArgumentException("Размер мастерской не может быть меньше 1");
+        }
         this.lengthWorkshop = lengthWorkshop;
         vehicles = new Vehicle[lengthWorkshop];
-        copyVehicles = new Vehicle[lengthWorkshop];
     }
 
     /**
@@ -45,8 +42,7 @@ public class Workshop {
      */
     public boolean addVehicles(Vehicle vehicle) {
         if (counter < vehicles.length) {
-            vehicles[counter] = vehicle;
-            counter++;
+            vehicles[counter++] = vehicle;
             return true;
         } else {
             return false;
@@ -54,34 +50,11 @@ public class Workshop {
     }
 
     /**
-     * Осуществляет одно действие ремонта всех транспортных средств, находящихся на ремонте
+     * Осуществляет одно действие ремонта всех транспортных средств, находящихся на ремонте.
      */
     public void repairAll() {
-        int checkRepair = 0;
         for (int i = 0; i < counter; i++) {
             vehicles[i].repair();
-            if (checkRepair != 0) {
-                vehicles[i - checkRepair] = vehicles[i];
-            }
-            checkRepair = vehicles[i].getWearLevel() == 0 ? checkRepair + 1 : checkRepair;
-        }
-
-        if (checkRepair != 0) {
-            for (int i = counter - 1; i > counter - 1 - checkRepair; i--) {
-                vehicles[i] = null;
-            }
-            counter -= checkRepair;
-        }
-    }
-
-    /**
-     * Выполняет полный ремонт всех транспортных средств.
-     */
-    public void repairAllFull() {
-        for (int i = 0; i < counter; i++) {
-            while (vehicles[i].getWearLevel() > 0) {
-                vehicles[i].repair();
-            }
             vehicles[i] = null;
         }
         counter = 0;
@@ -92,11 +65,7 @@ public class Workshop {
     }
 
     public Vehicle[] getVehicles() {
-        copyVehicles = vehicles.clone();
-        return copyVehicles;
+        return vehicles.clone();
     }
 
-    public int getCounter() {
-        return counter;
-    }
 }

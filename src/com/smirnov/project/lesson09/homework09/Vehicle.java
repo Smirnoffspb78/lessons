@@ -7,7 +7,7 @@ public class Vehicle {
     /**
      * Номер.
      */
-    private int number;
+    private String number;
     /**
      * Уровень износа.
      */
@@ -23,11 +23,11 @@ public class Vehicle {
      * @param number    Номер
      * @param wearLevel Уровень износа
      */
-    protected Vehicle(int number, int wearLevel) {
+    protected Vehicle(String number, int wearLevel) {
         if (wearLevel < 0 || wearLevel > 100) {
             throw new IllegalArgumentException("Уровень износа не может быть отрицательным или быть больше 100");
-        } else if (number < 0) {
-            throw new IllegalArgumentException("Номер не может быть отрицательным");
+        } else if (number == null || number.isBlank()) {
+            throw new IllegalArgumentException("Номер не должен быть null и иметь хотябы один символ");
         }
         this.number = number;
         this.wearLevel = wearLevel;
@@ -38,7 +38,7 @@ public class Vehicle {
      *
      * @param speedMax Максимальная скорость
      */
-    protected Vehicle(int speedMax, int number, int wearLevel) {
+    protected Vehicle(int speedMax, String number, int wearLevel) {
         this(number, wearLevel);
         if (speedMax <= 0) {
             throw new IllegalArgumentException("speedMax не может быть отрицательным или 0");
@@ -47,14 +47,15 @@ public class Vehicle {
     }
 
     /**
-     * Метод изменяет уровень износа транспортного средства.
+     * Ремонт транспортного средства.
      */
     public void repair() {
-        if (wearLevel > 0)
+        if (wearLevel > 0) {
             wearLevel--;
+        }
     }
 
-    public int getNumber() {
+    public String getNumber() {
         return number;
     }
 
@@ -64,5 +65,9 @@ public class Vehicle {
 
     public int getSpeedMax() {
         return speedMax;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
     }
 }

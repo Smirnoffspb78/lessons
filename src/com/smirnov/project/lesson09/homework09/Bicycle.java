@@ -8,13 +8,12 @@ public class Bicycle extends Vehicle {
      * Количество колес.
      */
     private int numberWheel = 2;
-    private static final int MIN_WHEEL = 1;
-    private static final int MAX_WHEEL = 4;
     /**
      * Тип.
      */
     private String type = "Городской";
-
+    private static final int MIN_WHEEL = 1;
+    private static final int MAX_WHEEL = 4;
 
     /**
      * Контсруктор, опсиывающий Велосипед.
@@ -22,7 +21,7 @@ public class Bicycle extends Vehicle {
      * @param number    Номер
      * @param wearLevel Уровень износа
      */
-    public Bicycle(int number, int wearLevel) {
+    public Bicycle(String number, int wearLevel) {
         super(number, wearLevel);
     }
 
@@ -33,7 +32,7 @@ public class Bicycle extends Vehicle {
      * @param number    Номер
      * @param wearLevel Максимальный уровень износа
      */
-    protected Bicycle(int speedMax, int number, int wearLevel) {
+    protected Bicycle(int speedMax, String number, int wearLevel) {
         super(speedMax, number, wearLevel);
     }
 
@@ -41,16 +40,18 @@ public class Bicycle extends Vehicle {
      * Конструктор, описывающий велосипед.
      *
      * @param speedMax  Максимальная скорость
-     * @param number    номер
+     * @param number    Номер
      * @param wearLevel - Уровень износа
      * @throws IllegalArgumentException Если некорректное количесвто колес. Если тип пустой или null
      */
-    public Bicycle(int speedMax, int number, int wearLevel, int numberWheel, String type) {
+    public Bicycle(int speedMax, String number, int wearLevel, int numberWheel, String type) {
         super(speedMax, number, wearLevel);
-        if (numberWheel < MIN_WHEEL || numberWheel > MAX_WHEEL)
-            throw new IllegalArgumentException("Количество колес должно быть от%dдо%d".formatted(MIN_WHEEL, MAX_WHEEL));
+        if (numberWheel < MIN_WHEEL || numberWheel > MAX_WHEEL) {
+            throw new IllegalArgumentException("Количество колес должно быть от %d до %d".formatted(MIN_WHEEL, MAX_WHEEL));
+        } else if (type == null || type.isBlank()) {
+            throw new IllegalArgumentException("Тип должен иметь хотябы 1 символ");
+        }
         this.numberWheel = numberWheel;
-        if (type == null || type.isBlank()) throw new IllegalArgumentException("Тип должен иметь хотябы 1 символ");
         this.type = type;
     }
 

@@ -19,7 +19,6 @@ public class GroupOfClimber {
      */
     private Climber[] climbers;
 
-    private Climber[] climbersCopy;
     /**
      * Гора
      *
@@ -72,8 +71,7 @@ public class GroupOfClimber {
     }
 
     public Climber[] getClimbers() {
-        climbersCopy = climbers.clone();
-        return climbersCopy;
+        return climbers.clone();
     }
 
     public int getNumberClimberInGroup() {

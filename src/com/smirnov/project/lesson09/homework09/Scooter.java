@@ -1,11 +1,13 @@
 package com.smirnov.project.lesson09.homework09;
 
+import static java.lang.Math.max;
+
 /**
  * Самокат.
  */
 public class Scooter extends Bicycle {
     /**
-     * Указывает электрический или нет
+     * Имеет электродвигатель
      */
     private boolean electrical;
 
@@ -15,7 +17,7 @@ public class Scooter extends Bicycle {
      * @param number    Номер
      * @param wearLevel Уровень износа
      */
-    public Scooter(int number, int wearLevel, boolean electrical) {
+    public Scooter(String number, int wearLevel, boolean electrical) {
         super(number, wearLevel);
         this.electrical = electrical;
     }
@@ -27,7 +29,7 @@ public class Scooter extends Bicycle {
      * @param number    Номер
      * @param wearLevel Уровень износа
      */
-    public Scooter(int speedMax, int number, int wearLevel, boolean electrical) {
+    public Scooter(int speedMax, String number, int wearLevel, boolean electrical) {
         super(speedMax, number, wearLevel);
         this.electrical = electrical;
     }
@@ -42,12 +44,9 @@ public class Scooter extends Bicycle {
     @Override
     public void repair() {
         if (electrical) {
-            wearLevel -= 2;
+            wearLevel=max(wearLevel-2, 0);
         } else {
-            wearLevel -= 3;
-        }
-        if (wearLevel < 0) {
-            wearLevel = 0;
+            wearLevel=max(wearLevel-3, 0);
         }
     }
 }

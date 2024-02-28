@@ -1,5 +1,7 @@
 package com.smirnov.project.lesson09.homework09;
 
+import static java.lang.Math.max;
+
 /**
  * Поезд.
  */
@@ -9,7 +11,7 @@ public class Train extends Vehicle {
      */
     private int numberWagon;
     /**
-     * Наличие климат контроля
+     * Имеет клиамт контроль
      */
     private boolean climateControl;
     private static final int CHECK_NUMBER_WAGON = 7;
@@ -23,7 +25,7 @@ public class Train extends Vehicle {
      * @param climateControl Климат котроль
      * @throws IllegalArgumentException Если некорректное значение numberWagon
      */
-    public Train(int number, int wearLevel, int numberWagon, boolean climateControl) {
+    public Train(String number, int wearLevel, int numberWagon, boolean climateControl) {
         super(number, wearLevel);
         if (numberWagon < 0) throw new IllegalArgumentException("numberWagon  должно быть положительным");
         this.numberWagon = numberWagon;
@@ -40,7 +42,7 @@ public class Train extends Vehicle {
      * @param speedMax       Максимальная скорость поезда
      * @throws IllegalArgumentException Если некорректное значение numberWagon
      */
-    public Train(int number, int wearLevel, int numberWagon, boolean climateControl, int speedMax) {
+    public Train(String number, int wearLevel, int numberWagon, boolean climateControl, int speedMax) {
         super(speedMax, number, wearLevel);
         if (numberWagon < 0) throw new IllegalArgumentException("numberWagon  должно быть положительным");
         this.numberWagon = numberWagon;
@@ -60,13 +62,10 @@ public class Train extends Vehicle {
      */
     @Override
     public void repair() {
-        if (numberWagon > CHECK_NUMBER_WAGON) {
-            wearLevel--;
+        if (numberWagon > CHECK_NUMBER_WAGON && wearLevel>0) {
+            super.repair();
         } else {
-            wearLevel -= 2;
-            if (wearLevel < 0) {
-                wearLevel = 0;
-            }
+            wearLevel= max(wearLevel-2, 0);
         }
     }
 }
