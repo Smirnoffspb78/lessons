@@ -1,11 +1,11 @@
 package com.smirnov.project.lesson08.homework8.task1;
 
 /**
- * Группа альпинистов для восхождения на гору
+ * Группа альпинистов для восхождения на гору.
  */
 public class GroupOfClimber {
     /**
-     * Указывает открыт ли набор в группу
+     * Указывает открыт ли набор в группу.
      */
     private boolean isRecruitOpened;
     /**
