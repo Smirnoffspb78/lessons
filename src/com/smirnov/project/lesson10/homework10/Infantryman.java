@@ -7,7 +7,7 @@ public class Infantryman extends BattleUnit {
     /**
      * Минимальное здоровье противника для повторной атаки.
      */
-    private final int minHealthForDoubleAttack = 5;
+    private static final int MIN_HEALTH_FOR_DOUBLE_ATTACK = 5;
 
     /**
      * Контсруктор создает пехотинца.
@@ -16,7 +16,6 @@ public class Infantryman extends BattleUnit {
      * @param velocity      Скорость
      * @param cash          Количество денег
      * @param attackForce   Сила атаки
-     * @see BattleUnit
      */
     public Infantryman(int healthInitial, double velocity, int cash, int attackForce) {
         super(healthInitial, velocity, cash, attackForce);
@@ -32,13 +31,14 @@ public class Infantryman extends BattleUnit {
      * Атака.
      *
      * @param attackedUnit Атакуемый юнит
+     * @Return true/false, если атака выполнена/не выполнена
      */
     @Override
     public boolean attack(BattleUnit attackedUnit) {
-        if (getHealth() > 0 && !attackedUnit.equals(this)) {
+        if (attackedUnit!=null && getHealth() > 0 && attackedUnit!=this && attackedUnit.getHealth()>0) {
             attackedUnit.setHealth(attackedUnit.getHealth() - getAttackForce());
             attackKnight(attackedUnit);
-            if (getVelocity() >= attackedUnit.getVelocity() && attackedUnit.getHealth() < minHealthForDoubleAttack) {
+            if (getVelocity() >= attackedUnit.getVelocity() && attackedUnit.getHealth() < MIN_HEALTH_FOR_DOUBLE_ATTACK) {
                 attackedUnit.setHealth(attackedUnit.getHealth() - getAttackForce());
                 attackKnight(attackedUnit);
             }

@@ -2,7 +2,6 @@ package com.smirnov.project.lesson10.homework10;
 
 import java.util.Arrays;
 
-import static com.smirnov.project.lesson10.homework10.Units.*;
 import static java.lang.Math.min;
 import static java.util.concurrent.ThreadLocalRandom.current;
 
@@ -10,6 +9,34 @@ import static java.util.concurrent.ThreadLocalRandom.current;
  * Король.
  */
 public class King extends Unit {
+
+    /**
+     * Максимальное количество юнитов в армии короля.
+     */
+    private static final int MAX_UNIT = 5;
+
+    /**
+     * Стоимость замены юнита с здоровьем 0 на нового юнита.
+     */
+    private static final int COST_UNIT = 12;
+    /**
+     * Начальное количество денег у короля.
+     */
+    private static final int INITIAL_CASH = 500;
+    /**
+     * Стоимсоть найма армии.
+     */
+    private static final int COST_ARMY = 200;
+
+    /**
+     * Стоимость восстановления здоровья короля при отдыхе.
+     */
+    private static final int MONEY_ON_HEALTH = 2;
+
+    /**
+     * Количество восстанавливаемых очков здоровья у короля при отдыхе.
+     */
+    private static final int HEALTH_RECOVERY = 5;
 
     /**
      * Указатель на текущее свободное место в армии.
@@ -21,7 +48,7 @@ public class King extends Unit {
      *
      * @see BattleUnit
      */
-    private BattleUnit[] battleUnits = new BattleUnit[MAX_UNIT];
+    private BattleUnit[] battleUnits;
 
 
     /**
@@ -29,7 +56,6 @@ public class King extends Unit {
      *
      * @param healthInitial Начальное здоровье
      * @param velocity      Скорость
-     * @see Unit
      */
 
     public King(int healthInitial, double velocity) {
@@ -41,10 +67,12 @@ public class King extends Unit {
      *
      * @return true/false если дсотаточно/недостаточно денег для наемая армии
      */
-    public boolean createArmy() {
-        if (getCash() > COST_ARMY) {
+    public boolean hiringArmy() {
+        if (getCash() >= COST_ARMY) {
+            battleUnits = new BattleUnit[MAX_UNIT];
             setCash(getCash() - COST_ARMY);
-            battleUnits = Units.randomGenerateArmy();
+            battleUnits = Units.
+                    randomGenerateArmy(MAX_UNIT);
             counterUnit = MAX_UNIT;
             return true;
         }
@@ -58,7 +86,7 @@ public class King extends Unit {
      * @return true/false если юнит заменился/если в рамии нет юнитов с здоровьем 0 или армия пуста
      */
     public boolean updateUnitInArmy(TypeBattleUnit typeBattleUnit) {
-        if (battleUnits[0] != null && getCash() > COST_UNIT && counterUnit < MAX_UNIT) {
+        if (battleUnits != null && getCash() >= COST_UNIT && counterUnit < MAX_UNIT) {
             setCash(getCash() - COST_UNIT);
             battleUnits[counterUnit] = Units.generateUnit(typeBattleUnit);
             counterUnit++;
@@ -109,8 +137,8 @@ public class King extends Unit {
      * @param kingAttacked Король, на которого нападают
      */
 
-    protected boolean attack(King kingAttacked) {
-        if (!kingAttacked.equals(this) && battleUnits[0] != null) {
+    protected boolean attackKings(King kingAttacked) {
+        if (kingAttacked.battleUnits != null && !kingAttacked.equals(this) && battleUnits[0] != null) {
             int temp;
             int numberThisUnit = 0;
             int numberAttackedUnit = 0;

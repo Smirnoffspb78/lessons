@@ -7,7 +7,14 @@ public class Main {
          */
         Knight knight = (Knight) Units.generateUnit(TypeBattleUnit.KNIGHT);
         Knight knight1 = (Knight) Units.generateUnit(TypeBattleUnit.KNIGHT);
+        System.out.println(knight.equals(knight1));
 
+
+
+
+
+
+        System.out.println("Проверка атаки рыцаря на рыцаря "+knight1.attack(knight));
 
         System.out.println("Рыцарь "+knight);
         System.out.println("Рыцарь1 "+knight1);
@@ -48,15 +55,15 @@ public class Main {
         System.out.println(king4);
 
         System.out.println("Возможность обновить юнита без армии "+king3.updateUnitInArmy(TypeBattleUnit.KNIGHT));
-        System.out.println("Возможность нападаения на самого себя "+king3.attack(king3));
-        System.out.println("Возможность нападения без армии "+king3.attack(king4));
+        System.out.println("Возможность нападаения на самого себя "+king3.attackKings(king3));
+        System.out.println("Возможность нападения без армии "+king3.attackKings(king4));
         System.out.println(king3.getCash());
         System.out.println(king4.getCash());
-        king3.createArmy();
-        System.out.println("Возможность нападения короля c армией на короля без армии "+king3.attack(king4));
+        king3.hiringArmy();
+        System.out.println("Возможность нападения короля c армией на короля без армии "+king3.attackKings(king4));
         System.out.println(king3.getCash());
         System.out.println(king4.getCash());
-        king4.createArmy();
+        king4.hiringArmy();
 
 
 
@@ -70,7 +77,7 @@ public class Main {
 
 
         System.out.println("После боя: 3, 4");
-        king3.attack(king4);
+        king3.attackKings(king4);
         System.out.println(king3);
         System.out.println(king4);
 
@@ -104,13 +111,13 @@ public class Main {
          * Бой с новым королем
          */
         King king = new King(100, 10);
-        king.createArmy();
+        king.hiringArmy();
 
         System.out.println("Перед боем 1, 4");
         System.out.println(king);
         System.out.println(king4);
 
-        king4.attack(king);
+        king4.attackKings(king);
 
         System.out.println("После боя 1,4 ");
         System.out.println(king);
@@ -124,21 +131,24 @@ public class Main {
        System.out.println("принудительное снижения здоровья");
         king.getBattleUnits()[0].setHealth(20);
         System.out.println(king.getBattleUnits()[0].getHealth());
-       System.out.println("Лечение рыцарем рыцаря из армии 1: "+ knight.toHel(king.getBattleUnits()[0], 20));
+       System.out.println("Лечение рыцарем рыцаря из армии 1: "+ knight.toHeal(king.getBattleUnits()[0], 20));
         System.out.println("Количество денег рыцаря после лечения: "+knight.getCash());
         System.out.println("Количество денег рыцаря из армии после лечения: "+king.getBattleUnits()[0].getCash());
         System.out.println("Количество здоровья рыцаря из армии после лечения: "+king.getBattleUnits()[0]);
         System.out.println("Начальное здоровье рыцаря из армии: "+ king.getBattleUnits()[0].getHealthInitial());
-        System.out.println("проверка лецения здоровья на больше, чем было изначально"+ knight.toHel(king.getBattleUnits()[0], 50));
+        System.out.println("проверка лецения здоровья на больше, чем было изначально"+ knight.toHeal(king.getBattleUnits()[0], 50));
         System.out.println("Количество денег рыцаря из армии после лечения: "+king.getBattleUnits()[0].getCash());
         System.out.println("Количество здоровья рыцаря из армии после лечения: "+king.getBattleUnits()[0]);
 
 
         System.out.println("Количество здоровья рыцаря изначально: "+knight.getHealthInitial());
-        System.out.println("проверка возможности лечить самого себя: "+ knight.toHel(knight, 2));
+        System.out.println("проверка возможности лечить самого себя: "+ knight.toHeal(knight, 2));
 
+/*
 
-
+        Knight knight5 = (Knight) Units.generateUnit(null);
+        System.out.println("5ый юнит"+knight5);
+*/
 
 
     }

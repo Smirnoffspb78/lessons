@@ -20,7 +20,6 @@ public abstract class BattleUnit extends Unit {
      * @param cash          Количество денег
      * @param attackForce   Сила атаки
      * @throws IllegalArgumentException Если здоровье, скорость или сила атаки неположиетльные. Если количество денег отрицательное
-     * @see Unit
      */
     protected BattleUnit(int healthInitial, double velocity, double cash, int attackForce) {
         super(healthInitial, velocity, cash);
@@ -29,6 +28,7 @@ public abstract class BattleUnit extends Unit {
 
     /**
      * Атака.
+     * @Return true/false, если атака выполнена/не выполнена
      */
     protected abstract boolean attack(BattleUnit attackedUnit);
 
@@ -58,9 +58,6 @@ public abstract class BattleUnit extends Unit {
         return "Unit{" +
                 "health=" + getHealth() +
                 ", attackForce=" + attackForce +
-                /*", healthInitial=" + healthInitial +
-                ", velocity=" + velocity +
-                ", cash=" + cash +*/
                 '}';
     }
 }

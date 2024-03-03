@@ -3,9 +3,9 @@ package com.smirnov.project.lesson10.homework10;
 /**
  * Дополнительный функционал юнитов.
  */
-public interface UnitFunctional {
+public interface UnitHealing {
     /**
      * Восстановление здоровья.
      */
-    boolean toHel(Unit unit, int healthPoint);
+    boolean toHeal(Unit unit, int healthPoint);
 }

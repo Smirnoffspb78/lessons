@@ -38,7 +38,7 @@ public class Unit {
         this.healthInitial = healthInitial;
         this.velocity = velocity;
         this.cash = cash;
-        health = healthInitial;
+        this.health = healthInitial;
     }
 
     /**
@@ -88,9 +88,6 @@ public class Unit {
     public String toString() {
         return "Unit{" +
                 "health=" + health +
-                /*", healthInitial=" + healthInitial +
-                ", velocity=" + velocity +
-                ", cash=" + cash +*/
                 '}';
     }
 }
