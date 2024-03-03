@@ -33,10 +33,10 @@ public class SortingUniqueItems {
 
     /**
      * Метод для поиска неуникальных элементов и сортировки использует вложенные циклы.
-     * <P>Реализация задачи №1.
+     * <p>Реализация задачи №1.
      *
-     * @param arr Исходный неотсортированный массив.
-     * @return Отсортированный массив или пустой массив в случае неверных исходных данных.
+     * @param arr Исходный неотсортированный массив
+     * @return Отсортированный массив или пустой массив в случае неверных исходных данных
      */
     public static int[] sortingUniqueItems(int[] arr) {
         String nameMethod = "sortingUniqueItems";
@@ -77,8 +77,8 @@ public class SortingUniqueItems {
      * На каждом этапе сравниваем текущий элемент с предыдущими.
      * <p>Реализация задачи №2.
      *
-     * @param arr Исходный неотсортированный массив.
-     * @return Отсортированный массив или пустой массив в случае неверных исходных данных..
+     * @param arr Исходный неотсортированный массив
+     * @return Отсортированный массив или пустой массив в случае неверных исходных данных
      */
     public static int[] uniqueSortingWithThreeCycles(int[] arr) {
         String nameMethod = "uniqueSortingWithThreeCycles";
@@ -120,8 +120,8 @@ public class SortingUniqueItems {
      * массив исходных данных и новый массив, который кладутся отсортированные значения.
      * <p>Реализация задачи №2.
      *
-     * @param arr Исходный неотсортированный массив.
-     * @return Отсортированный массив или пустой массив в случае неверных исходных данных.
+     * @param arr Исходный неотсортированный массив
+     * @return Отсортированный массив или пустой массив в случае неверных исходных данных
      */
     public static int[] uniqueSortingWithTwoArray(int[] arr) {
         String nameMethod = "uniqueSortingWithTwoArray";
@@ -207,8 +207,8 @@ public class SortingUniqueItems {
      * Для сортировки массива используются коллекции.
      * <p>Реализация задачи №2.
      *
-     * @param arr Исходный неостортирвоанный массив.
-     * @return Отсортированный массив или пустой массив в случае неверных исходных данных.
+     * @param arr Исходный неостортирвоанный массив
+     * @return Отсортированный массив или пустой массив в случае неверных исходных данных
      */
     public static int[] uniqueSortingWithCollection(int[] arr) {
         String nameMethod = "uniqueSortingWithCollection";
