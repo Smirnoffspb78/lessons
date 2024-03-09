@@ -57,10 +57,7 @@ public class Gallery implements Drawable {
 
     @Override
     public String toString() {
-        return "Gallery{" +
-                "name='" + name + '\'' +
-                ", drawables=" + Arrays.toString(drawables) +
-                '}';
+        return "Gallery{name='%s', drawables=%s}".formatted(name, Arrays.toString(drawables));
     }
 
 }

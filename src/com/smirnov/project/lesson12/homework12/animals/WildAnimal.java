@@ -16,9 +16,8 @@ public class WildAnimal extends Animal {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof WildAnimal that)) return false;
         if (!super.equals(o)) return false;
-        WildAnimal that = (WildAnimal) o;
         return strength == that.strength;
     }
 

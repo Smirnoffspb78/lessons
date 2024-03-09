@@ -19,15 +19,14 @@ public class Image implements Drawable, Cloneable {
 
     @Override
     public String toString() {
-        return "Image{" +
-                "path='" + path + '\'' +
-                '}';
+        return "Image{path='%s'}".formatted(path);
     }
 
     public void setPath(String path) {
         this.path = path;
     }
 
+    @Override
     public Image clone() {
         try {
             return (Image) super.clone();

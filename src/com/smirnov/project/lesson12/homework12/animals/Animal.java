@@ -2,7 +2,7 @@ package com.smirnov.project.lesson12.homework12.animals;
 
 import java.util.Objects;
 
- abstract public class Animal {
+abstract public class Animal {
     private String name;
     private double age;
 
@@ -25,8 +25,7 @@ import java.util.Objects;
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Animal animal = (Animal) o;
+        if (!(o instanceof Animal animal)) return false;
         return Double.compare(age, animal.age) == 0 && Objects.equals(name, animal.name);
     }
 

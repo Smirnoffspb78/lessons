@@ -14,23 +14,15 @@ public class Wolf extends WildAnimal {
 
     @Override
     public String toString() {
-        return "Wolf{" +
-                "likeToEat=" + Arrays.toString(likeToEat) +
-                ", color='" + color + '\'' +
-                "strength=" + getStrength() + '\'' +
-                "name=" + getName() + '\'' +
-                "age=" + getAge() +
-                '}';
+        return "Wolf{likeToEat=%s, color='%s' strength=%d' name=%s' age=%s}".formatted(Arrays.toString(likeToEat), color, getStrength(), getName(), getAge());
     }
-
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Wolf wolf)) return false;
         if (!super.equals(o)) return false;
-        Wolf wolf = (Wolf) o;
-        return Arrays.equals(likeToEat, wolf.likeToEat) && Objects.equals(color, wolf.color);
+        return Objects.equals(color, wolf.color) && Arrays.equals(likeToEat, wolf.likeToEat);
     }
 
     @Override
