@@ -13,7 +13,7 @@ public class Application {
         //Создание массива абонементов для проверки наполняемости
         SeasonTicket[] seasonTicketOneTime = new SeasonTicket[21];
         for (int i = 0; i < seasonTicketOneTime.length; i++) {
-            seasonTicketOneTime[i] = new SeasonTicket(1, person);
+            seasonTicketOneTime[i] = new SeasonTicket(person);
             addTicket(GYM, seasonTicketOneTime[i]);
         }
         printAllSeasonTicket();
@@ -31,14 +31,14 @@ public class Application {
         System.out.println(addTicket(null, seasonTicketOneTime[1]));
         System.out.println(addTicket(GROUP_CLASSES, null));
 
-        SeasonTicket seasonTicketDayTime = new SeasonTicket(20, localDate, person, DAY_TIME);
+        SeasonTicket seasonTicketDayTime = new SeasonTicket(localDate, person, DAY_TIME);
         System.out.println("Добавление в недопустимую группу");
         System.out.println(addTicket(SWIMMING_POOL, seasonTicketDayTime));
 
         System.out.println("Добавление в допустимую группу");
         System.out.println(addTicket(GYM, seasonTicketDayTime));
 
-        SeasonTicket seasonTicketFullTime = new SeasonTicket(20, localDate, person, FULL_TIME);
+        SeasonTicket seasonTicketFullTime = new SeasonTicket(localDate, person, FULL_TIME);
         System.out.println(addTicket(GROUP_CLASSES, seasonTicketFullTime));
         printAllSeasonTicket();
     }

@@ -11,7 +11,11 @@ public class SeasonTicket {
     /**
      * Номер абонемента.
      */
-    private final int number;
+    private int number=1;
+    /**
+     * Счетчик абонементов.
+     */
+    private static int id=1;
     /**
      * Дата начала действия абонемента.
      */
@@ -32,16 +36,15 @@ public class SeasonTicket {
     /**
      * Конструктор создает разовый абонемент.
      *
-     * @param number            Номер абонемента
      * @param ownerSeasonTicket Владелец абонемента
      * @throws IllegalArgumentException Если ownerSeasonTicket=null. Если number отрицательный или 0
      */
-    public SeasonTicket(int number, OwnerSeasonTicket ownerSeasonTicket) {
+    public SeasonTicket(OwnerSeasonTicket ownerSeasonTicket) {
         if (ownerSeasonTicket == null || number < 1) {
             throw new IllegalArgumentException("ownerSeasonTicket не может быть null.\nnumber должен быть положительным");
         }
         typeSeasonTicket = ONE_TIME;
-        this.number = number;
+        number=id++;
         this.ownerSeasonTicket = ownerSeasonTicket;
         dateEnding = LocalDate.now().plusDays(1);
     }
@@ -55,13 +58,14 @@ public class SeasonTicket {
      * @param typeSeasonTicket  Тип абонемента
      * @throws IllegalArgumentException Если typeSeasonTicket null или ONE_TIME. Если dateOfRegistration не позднее dateOfRegistration
      */
-    public SeasonTicket(int number, LocalDate dateEnding, OwnerSeasonTicket ownerSeasonTicket, TypeSeasonTicket typeSeasonTicket) {
-        this(number, ownerSeasonTicket);
+    public SeasonTicket(LocalDate dateEnding, OwnerSeasonTicket ownerSeasonTicket, TypeSeasonTicket typeSeasonTicket) {
+        this(ownerSeasonTicket);
         if (typeSeasonTicket == null || typeSeasonTicket == ONE_TIME || !dateEnding.isAfter(dateOfRegistration)) {
             throw new IllegalArgumentException("typeSeasonTicket не должен быть null, не должен быть ONE_TIME.\n dateEnding должна быть позже, чем dateOfRegistration");
         }
         this.dateEnding = dateEnding;
         this.typeSeasonTicket = typeSeasonTicket;
+        number=id++;
     }
 
     public int getNumber() {

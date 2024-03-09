@@ -53,7 +53,7 @@ public enum Fitness {
     Fitness(String name) {
         this.name = name;
         defaultOwner = new OwnerSeasonTicket("DefaultName", "DefaultSurname", LocalDate.now().getYear() - 1);
-        defaultSeasonTicket = new SeasonTicket(9999999, defaultOwner);
+        defaultSeasonTicket = new SeasonTicket(defaultOwner);
     }
 
     /**
