@@ -42,19 +42,11 @@ public class Fitness {
     private int counterGroupClasses;
 
     /**
-     * Дефолтный пользователь.
-     */
-    private final OwnerMembership defaultOwner = new OwnerMembership("DefaultName", "DefaultSurname", LocalDate.now().getYear() - 1);
-
-    /**
-     * Дефолтный абонемент.
-     */
-    private final Membership defaultMembership = new Membership(LocalDate.now().plusDays(1), defaultOwner, FULL_TIME);
-
-    /**
      * Заполняет секцию фитнеса дефолтными пользователями.
      */
     public void addDefaultTicket(TypeFitness typeFitness) {
+        OwnerMembership defaultOwner = new OwnerMembership("DefaultName", "DefaultSurname", LocalDate.now().getYear() - 1);
+        Membership defaultMembership = new Membership(LocalDate.now().plusDays(1), defaultOwner, FULL_TIME);
         switch (typeFitness) {
             case GYM -> {
                 Arrays.fill(membershipsGym, defaultMembership);
@@ -71,6 +63,62 @@ public class Fitness {
             default ->
                     throw new IllegalArgumentException("В метод addDefaultTicket передано недопустимое значение: %s".formatted(typeFitness));
         }
+    }
+
+    /**
+     * Добавляет абонемент в секцию фитнеса.
+     *
+     * @param typeFitness Секция фитнеса
+     * @param membership  Абонемент
+     * @return true/false в случае успешного/неуспешного добавления пользователя в секцию фитнеса
+     */
+    public boolean addTicket(TypeFitness typeFitness, Membership membership) {
+        if (membership == null || typeFitness == null) {
+            return false;
+        }
+        boolean checkedZone = false;
+        TypeFitness[] typeFitnesses = membership.getTypeMembership().getTypeFitness();
+        for (TypeFitness fitness : typeFitnesses) {
+            if (fitness == typeFitness) {
+                checkedZone = true;
+                break;
+            }
+        }
+        LocalTime localTimeBegin = membership.getTypeMembership().getBeginTime();
+        LocalTime localTimeEnd = membership.getTypeMembership().getBeginTime();
+        if (!checkedZone || localTimeBegin.isAfter(LocalTime.now())
+                || localTimeEnd.isAfter(LocalTime.now())) {
+            logger.info("Нет доступа в %s.".formatted(typeFitness.getName()));
+            return false;
+        } else if (!LocalDate.now().isBefore(membership.getDateEnding())) {
+            logger.info("Абонемент просрочен.");
+            return false;
+        } else if (getCounter(typeFitness) >= NUMBER_OF_REGISTRATION) {
+            logger.info("Все места заполнены.");
+            return false;
+        } else if (!checkAvailabilityMembership(membershipsGym, counterGym, membership, GYM) ||
+                !checkAvailabilityMembership(membershipSwimmingPool, counterSwimmingPool, membership, SWIMMING_POOL) ||
+                !checkAvailabilityMembership(membershipGroupClasses, counterGroupClasses, membership, GROUP_CLASSES)) {
+            return false;
+        }
+        logger.info("%s добавлен в группу %s%nДата и время посещения: %s".formatted(membership.getOwnerMembership(), typeFitness.getName(), LocalDateTime.now()));
+        switch (typeFitness) {
+            case GYM -> membershipsGym[counterGym++] = membership;
+            case SWIMMING_POOL -> membershipSwimmingPool[counterSwimmingPool++] = membership;
+            case GROUP_CLASSES -> membershipGroupClasses[counterGroupClasses++] = membership;
+            default ->
+                    throw new IllegalArgumentException("В метод registration передано недопустимое значение: " + typeFitness);
+        }
+        return true;
+    }
+
+    /**
+     * Выводит информацию о всех абонементах в секции.
+     */
+    public void printAllSeasonTicket() {
+        System.out.printf("%s: %s%n%s: %s%n%s: %s%n", GYM.getName(), Arrays.toString(getMembershipsGym()),
+                SWIMMING_POOL.getName(), Arrays.toString(getMembershipSwimmingPool()), GROUP_CLASSES.getName(),
+                Arrays.toString(getMembershipGroupClasses()));
     }
 
     /**
@@ -97,14 +145,15 @@ public class Fitness {
 
     /**
      * Вспомогательный метод проверяет наличие абонемента в секции.
+     *
      * @param memberships Секция
-     * @param counter Указатель массива секции
-     * @param membership Абонемент
+     * @param counter     Указатель массива секции
+     * @param membership  Абонемент
      * @param typeFitness Тип секции
-     * @return true/false если абонемент присутствует/не присутствует в секции
+     * @return true/false если абонемент не присутствует/присутствует в секции
      */
-    private boolean checkMembership(Membership[] memberships, int counter, Membership membership,
-                                    TypeFitness typeFitness) {
+    private boolean checkAvailabilityMembership(Membership[] memberships, int counter, Membership membership,
+                                                TypeFitness typeFitness) {
         for (int i = 0; i < counter; i++) {
             if (memberships[i] == membership) {
                 logger.info("Этот абонемент уже зарегистрирован в %s".formatted(typeFitness.getName()));
@@ -114,86 +163,15 @@ public class Fitness {
         return true;
     }
 
-    /**
-     * Вспомогательный метод проверяет присутствие абонемента в одной из секций.
-     *
-     * @param membership Добавляемый абонемент
-     * @return true/false если абонемент не зарегистрирован/уже зарегистрирован в секции
-     */
-    private boolean checkRegistration(Membership membership) {
-        if (!checkMembership(membershipsGym, counterGym, membership, GYM)) {
-            return false;
-        } else if (!checkMembership(membershipSwimmingPool, counterSwimmingPool, membership, SWIMMING_POOL)) {
-            return false;
-        } else return checkMembership(membershipGroupClasses, counterGroupClasses, membership, GROUP_CLASSES);
-    }
-
-    /**
-     * Добавляет абонемент в секцию фитнеса.
-     *
-     * @param typeFitness Секция фитнеса
-     * @param membership  Абонемент
-     * @return true/false в случае успешного/неуспешного добавления пользователя в секцию фитнеса
-     */
-    public boolean addTicket(TypeFitness typeFitness, Membership membership) {
-        if (membership == null || typeFitness == null) {
-            return false;
-        }
-        boolean checkedZone = false;
-        for (int i = 0; i < membership.getTypeMembership().getTypeFitness().length; i++) {
-            if (membership.getTypeMembership().getTypeFitness()[i] == typeFitness) {
-                checkedZone = true;
-            }
-        }
-        if (!checkedZone || membership.getTypeMembership().getBeginTime().isAfter(LocalTime.now())
-                || !membership.getTypeMembership().getEndTime().isAfter(LocalTime.now())) {
-            logger.info("Нет доступа в %s.".formatted(typeFitness.getName()));
-            return false;
-        } else if (!LocalDate.now().isBefore(membership.getDateEnding())) {
-            logger.info("Абонемент просрочен.");
-            return false;
-        } else if (getCounter(typeFitness) >= NUMBER_OF_REGISTRATION) {
-            logger.info("Все места заполнены.");
-            return false;
-        }
-        if (!checkRegistration(membership)) {
-            return false;
-        }
-        logger.info("%s добавлен в группу %s%nДата и время посещения: %s".formatted(membership.getOwnerMembership(), typeFitness.getName(), LocalDateTime.now()));
-        switch (typeFitness) {
-            case GYM -> membershipsGym[counterGym++] = membership;
-            case SWIMMING_POOL -> membershipSwimmingPool[counterSwimmingPool++] = membership;
-            case GROUP_CLASSES -> membershipGroupClasses[counterGroupClasses++] = membership;
-            default ->
-                    throw new IllegalArgumentException("В метод registration передано недопустимое значение: " + typeFitness);
-        }
-        return true;
-    }
-
-    /**
-     * Выводит информацию о всех абонементах в секции.
-     */
-    public void printAllSeasonTicket() {
-        System.out.printf("%s: %s%n%s: %s%n%s: %s%n", GYM.getName(), Arrays.toString(getMembershipsGym()),
-                SWIMMING_POOL.getName(), Arrays.toString(getMembershipSwimmingPool()), GROUP_CLASSES.getName(),
-                Arrays.toString(getMembershipGroupClasses()));
-    }
-
     public Membership[] getMembershipsGym() {
-        Membership[] seasonTicketsCopy = new Membership[counterGym];
-        System.arraycopy(membershipsGym, 0, seasonTicketsCopy, 0, counterGym);
-        return seasonTicketsCopy;
+        return Arrays.copyOf(membershipsGym, counterGym);
     }
 
     public Membership[] getMembershipSwimmingPool() {
-        Membership[] seasonTicketsCopy = new Membership[counterSwimmingPool];
-        System.arraycopy(membershipSwimmingPool, 0, seasonTicketsCopy, 0, counterSwimmingPool);
-        return seasonTicketsCopy;
+        return Arrays.copyOf(membershipSwimmingPool, counterSwimmingPool);
     }
 
     public Membership[] getMembershipGroupClasses() {
-        Membership[] seasonTicketsCopy = new Membership[counterGroupClasses];
-        System.arraycopy(membershipGroupClasses, 0, seasonTicketsCopy, 0, counterGroupClasses);
-        return seasonTicketsCopy;
+        return Arrays.copyOf(membershipGroupClasses, counterGroupClasses);
     }
 }

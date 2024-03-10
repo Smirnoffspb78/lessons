@@ -2,18 +2,21 @@ package com.smirnov.project.courseproject1var2;
 
 import java.time.LocalDate;
 
+import static com.smirnov.project.courseproject1var2.TypeMembership.ONE_TIME;
+
 /**
  * Абонемент.
  */
 public class Membership {
     /**
-     * Номер абонемента.
-     */
-    private final int number;
-    /**
      * Счетчик абонементов.
      */
     private static int id;
+    /**
+     * Номер абонемента.
+     */
+    private final int number;
+
     /**
      * Дата начала действия абонемента.
      */
@@ -23,13 +26,14 @@ public class Membership {
      */
     private final LocalDate dateEnding;
     /**
-     * Владелец абонемента.
-     */
-    private OwnerMembership ownerMembership;
-    /**
      * Тип абонемента.
      */
     private final TypeMembership typeMembership;
+
+    /**
+     * Владелец абонемента.
+     */
+    private OwnerMembership ownerMembership;
 
     /**
      * Конструктор создает абонемент.
@@ -45,14 +49,10 @@ public class Membership {
         if (!dateEnding.isAfter(dateOfRegistration)) {
             throw new IllegalArgumentException("dateEnding должна быть позже, чем dateOfRegistration.");
         }
-        if (typeMembership == TypeMembership.ONE_TIME) {
-            this.dateEnding = LocalDate.now().plusDays(1);
-        } else {
-            this.dateEnding = dateEnding;
-        }
+        this.dateEnding = typeMembership == ONE_TIME ? dateOfRegistration.plusDays(1) : dateEnding;
         this.typeMembership = typeMembership;
         this.ownerMembership = ownerMembership;
-        number = id++;
+        number = ++id;
     }
 
     public int getNumber() {
@@ -84,6 +84,6 @@ public class Membership {
 
     @Override
     public String toString() {
-        return "%s".formatted(ownerMembership);
+        return ownerMembership.toString();
     }
 }

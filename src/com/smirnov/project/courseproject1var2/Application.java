@@ -3,8 +3,7 @@ package com.smirnov.project.courseproject1var2;
 import java.time.LocalDate;
 
 import static com.smirnov.project.courseproject1var2.TypeFitness.*;
-import static com.smirnov.project.courseproject1var2.TypeMembership.DAY_TIME;
-import static com.smirnov.project.courseproject1var2.TypeMembership.FULL_TIME;
+import static com.smirnov.project.courseproject1var2.TypeMembership.*;
 
 public class Application {
     public static void main(String[] args) {
@@ -15,7 +14,8 @@ public class Application {
         //Создание массива абонементов для проверки наполняемости
         Membership[] membershipOneTime = new Membership[21];
         for (int i = 0; i < membershipOneTime.length; i++) {
-            membershipOneTime[i] = new Membership(localDate, person, TypeMembership.ONE_TIME);
+            membershipOneTime[i] = new Membership(localDate, person, ONE_TIME);
+            System.out.println(i + " " + membershipOneTime[i].getNumber());
             fitness.addTicket(GYM, membershipOneTime[i]);
         }
         fitness.printAllSeasonTicket();
@@ -43,6 +43,9 @@ public class Application {
         Membership membershipFullTime = new Membership(localDate, person, FULL_TIME);
         System.out.println(fitness.addTicket(GROUP_CLASSES, membershipFullTime));
         fitness.printAllSeasonTicket();
+
+        System.out.println(membershipOneTime[0].getNumber());
+
     }
 
 }

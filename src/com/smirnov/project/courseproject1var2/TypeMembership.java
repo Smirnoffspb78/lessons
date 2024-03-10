@@ -11,7 +11,7 @@ public enum TypeMembership {
     /**
      * Разовый абонемент.
      */
-    ONE_TIME(LocalTime.of(8, 0), LocalTime.of(22, 0), new TypeFitness[]{GYM, SWIMMING_POOL}),
+    ONE_TIME(LocalTime.of(8, 0), LocalTime.of(23, 0), new TypeFitness[]{GYM, SWIMMING_POOL}),
     /**
      * Дневной абонемент.
      */
@@ -19,7 +19,7 @@ public enum TypeMembership {
     /**
      * Полный абонемент.
      */
-    FULL_TIME(LocalTime.of(8, 0), LocalTime.of(22, 0), new TypeFitness[]{GYM, SWIMMING_POOL, GROUP_CLASSES});
+    FULL_TIME(LocalTime.of(8, 0), LocalTime.of(23, 0), new TypeFitness[]{GYM, SWIMMING_POOL, GROUP_CLASSES});
 
     /**
      * Начало посещения.

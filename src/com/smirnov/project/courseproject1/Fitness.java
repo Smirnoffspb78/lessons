@@ -11,9 +11,7 @@ import java.util.logging.Logger;
  * Фитнес.
  */
 public enum Fitness {
-    GYM("Спортивный зал"),
-    SWIMMING_POOL("Бассейн"),
-    GROUP_CLASSES("Групповые занятия");
+    GYM("Спортивный зал"), SWIMMING_POOL("Бассейн"), GROUP_CLASSES("Групповые занятия");
     /**
      * Количество одновременно зарегистрированных абонементов в секции фитнесе.
      */
@@ -24,15 +22,6 @@ public enum Fitness {
      */
     private final SeasonTicket[] seasonTickets = new SeasonTicket[NUMBER_OF_REGISTRATION];
 
-    /**
-     * Дефолтный пользователь.
-     */
-    private final OwnerSeasonTicket defaultOwner;
-
-    /**
-     * Дефолтный абонемент.
-     */
-    private final SeasonTicket defaultSeasonTicket;
     /**
      * Наименование секции фитнеса.
      */
@@ -52,14 +41,14 @@ public enum Fitness {
      */
     Fitness(String name) {
         this.name = name;
-        defaultOwner = new OwnerSeasonTicket("DefaultName", "DefaultSurname", LocalDate.now().getYear() - 1);
-        defaultSeasonTicket = new SeasonTicket(defaultOwner);
     }
 
     /**
      * Заполняет секцию фитнеса дефолтными пользователями.
      */
     public void addDefaultTicket() {
+        OwnerSeasonTicket defaultOwner = new OwnerSeasonTicket("DefaultName", "DefaultSurname", LocalDate.now().getYear() - 1);
+        SeasonTicket defaultSeasonTicket = new SeasonTicket(defaultOwner);
         Arrays.fill(seasonTickets, defaultSeasonTicket);
         counterSeasonTicket = 0;
     }
@@ -100,8 +89,7 @@ public enum Fitness {
                 checkedZone = true;
             }
         }
-        if (!checkedZone || seasonTicket.getTypeSeasonTicket().getBeginTime() > LocalTime.now().getHour()
-                || seasonTicket.getTypeSeasonTicket().getEndTime() <= LocalTime.now().getHour()) {
+        if (!checkedZone || seasonTicket.getTypeSeasonTicket().getBeginTime() > LocalTime.now().getHour() || seasonTicket.getTypeSeasonTicket().getEndTime() <= LocalTime.now().getHour()) {
             logger.info("Нет доступа в %s.".formatted(typeFitness.getName()));
             return false;
         } else if (!LocalDate.now().isBefore(seasonTicket.getDateEnding())) {
@@ -123,9 +111,7 @@ public enum Fitness {
      * Выводит информацию о всех абонементах в секции.
      */
     public static void printAllSeasonTicket() {
-        System.out.println("%s: %s%n%s: %s%n%s: %s".formatted(GYM.getName(), Arrays.toString(GYM.getSeasonTickets()),
-                SWIMMING_POOL.getName(), Arrays.toString(SWIMMING_POOL.getSeasonTickets()), GROUP_CLASSES.getName(),
-                Arrays.toString(GROUP_CLASSES.getSeasonTickets())));
+        System.out.println("%s: %s%n%s: %s%n%s: %s".formatted(GYM.getName(), Arrays.toString(GYM.getSeasonTickets()), SWIMMING_POOL.getName(), Arrays.toString(SWIMMING_POOL.getSeasonTickets()), GROUP_CLASSES.getName(), Arrays.toString(GROUP_CLASSES.getSeasonTickets())));
     }
 
     public SeasonTicket[] getSeasonTickets() {
