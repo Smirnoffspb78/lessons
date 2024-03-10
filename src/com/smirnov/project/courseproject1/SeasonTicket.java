@@ -97,6 +97,6 @@ public class SeasonTicket {
 
     @Override
     public String toString() {
-        return "%s".formatted(ownerSeasonTicket);
+        return ownerSeasonTicket.toString();
     }
 }
