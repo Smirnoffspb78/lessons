@@ -12,9 +12,10 @@ public class Gallery implements Drawable, Cloneable {
         this.name = name;
     }
 
+    @Override
     public Gallery clone() {
         Drawable[] drawablesCopy = new Drawable[drawables.length];
-        Gallery gallery = new Gallery(getName(), drawablesCopy); //Это то, что мы должны вернуть. В галерею входят картинки и другие галереи
+        Gallery gallery = new Gallery(name, drawablesCopy); //Это то, что мы должны вернуть. В галерею входят картинки и другие галереи
         for (int i = 0; i < drawablesCopy.length; i++) {
             gallery.drawables[i]=drawables[i].clone();
         }
