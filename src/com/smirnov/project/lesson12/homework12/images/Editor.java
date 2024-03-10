@@ -22,13 +22,8 @@ public final class Editor implements Cloneable {
 
     @Override
     public Editor clone() {
-        if (drawable instanceof Image) {
-            return new Editor(((Image) drawable).clone());
-        } else {
-            return new Editor(((Gallery) drawable).clone());
-        }
+        return new Editor(drawable.clone());
     }
-
 
     public Drawable getDrawable() {
         return drawable;

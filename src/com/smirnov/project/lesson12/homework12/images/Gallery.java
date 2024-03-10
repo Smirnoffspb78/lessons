@@ -3,7 +3,7 @@ package com.smirnov.project.lesson12.homework12.images;
 
 import java.util.Arrays;
 
-public class Gallery implements Drawable {
+public class Gallery implements Drawable, Cloneable {
     private String name;
     private Drawable[] drawables;
 
@@ -12,22 +12,17 @@ public class Gallery implements Drawable {
         this.name = name;
     }
 
-    @Override
     public Gallery clone() {
         Drawable[] drawablesCopy = new Drawable[drawables.length];
-        Gallery gallery = new Gallery(getName(), drawablesCopy);
+        Gallery gallery = new Gallery(getName(), drawablesCopy); //Это то, что мы должны вернуть. В галерею входят картинки и другие галереи
         for (int i = 0; i < drawablesCopy.length; i++) {
-            if (drawables[i] instanceof Image) {
-                gallery.drawables[i] = ((Image) drawables[i]).clone();
-            } else if (drawables[i] instanceof Gallery) {
-                gallery.drawables[i] = ((Gallery) drawables[i]).clone();
-            }
+            gallery.drawables[i]=drawables[i].clone();
         }
         return gallery;
     }
 
     public Drawable[] getDrawables() {
-        return drawables;
+        return drawables.clone();
     }
 
     public Drawable[] getImages() {
