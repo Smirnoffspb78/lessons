@@ -1,18 +1,37 @@
 package com.smirnov.project.lesson13.homework13;
 
-/**
- * Описывает поведение животного.
- */
-public interface Action {
+public abstract class Action implements Execute {
+
     /**
-     * Выполняет действие.
+     * Действие.
      */
-    void execute();
+    private final Action action;
+
+    /**
+     * Конструктор создает возможность есть.
+     *
+     * @param action Следующее действие
+     */
+
+    protected Action(Action action) {
+        this.action = action;
+    }
 
     /**
      * Переходит к следующему действию.
      *
      * @param action Следующее действие
      */
-    boolean nextAction(Action action);
+
+    public boolean nextAction(Action action) {
+        if (action != null) {
+            action.execute();
+            return true;
+        }
+        return false;
+    }
+
+    public Action getAction() {
+        return action;
+    }
 }

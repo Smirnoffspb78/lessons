@@ -3,8 +3,7 @@ package com.smirnov.project.lesson13.homework13;
 /**
  * Возможность есть.
  */
-public class Eat implements Action {
-    private final Action action;
+public class Eat extends Action {
 
     /**
      * Конструктор создает возможность есть.
@@ -12,11 +11,7 @@ public class Eat implements Action {
      * @param action Следующее действие
      */
     public Eat(Action action) {
-        this.action = action;
-    }
-
-    public Action getAction() {
-        return action;
+        super(action);
     }
 
     /**
@@ -25,22 +20,9 @@ public class Eat implements Action {
     @Override
     public void execute() {
         System.out.println("Animal to eat.");
-        if (action != null) {
-            nextAction(action);
+        if (getAction() != null) {
+            nextAction(getAction());
         }
     }
 
-    /**
-     * Переходит к следующему действию.
-     *
-     * @param action Следующее действие
-     */
-    @Override
-    public boolean nextAction(Action action) {
-        if (action != null) {
-            action.execute();
-            return true;
-        }
-        return false;
-    }
 }

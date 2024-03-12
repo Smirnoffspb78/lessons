@@ -3,7 +3,7 @@ package com.smirnov.project.lesson13.homework13;
 /**
  * Возможность пить.
  */
-public class Drink extends Eat implements Action {
+public class Drink extends Action {
 
     /**
      * Конструктор создает возможность пить.
