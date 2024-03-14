@@ -1,7 +1,7 @@
 package com.smirnov.project.lesson13.homework13;
 
 /**
- * Описывает поведение животного.
+ * Описывает поведение.
  */
 public interface Execute {
     /**
