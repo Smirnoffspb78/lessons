@@ -40,7 +40,7 @@ public class FruitStorage {
                 if (fruit.equals(toStorageInfo)) {
                     fruit.setCount(min(fruit.getCount() + toStorageInfo.getCount(), fruit.getCount() + numberOfEmptySlots));
                     numberOfEmptySlots = max(numberOfEmptySlots - toStorageInfo.getCount(), 0);
-                    return false;
+                    return true;
                 }
             }
         }
@@ -116,7 +116,6 @@ public class FruitStorage {
         }
         return minPrice;
     }
-
 
 
     public int getNumberOfSlots() {

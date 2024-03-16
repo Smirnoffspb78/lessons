@@ -13,7 +13,7 @@ public class FruitToStorageInfo implements Cloneable {
     public FruitToStorageInfo(FruitType type, double price, int count) {
         if (type == null) throw new NullPointerException("type=null");
         setPrice(price);
-        setPrice(count);
+        setCount(count);
         this.type = type;
     }
 
