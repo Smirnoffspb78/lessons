@@ -11,10 +11,14 @@ public class FruitToStorageInfo implements Cloneable {
 
     // конструктор, принимающий значения всех свойств + проверки
     public FruitToStorageInfo(FruitType type, double price, int count) {
-        if (type == null) throw new NullPointerException("type=null");
+        Objects.requireNonNull(type, "type=null");
         setPrice(price);
         setCount(count);
         this.type = type;
+    }
+
+    public enum FruitType {
+        APPLE, PEAR, BANANA, APRICOT;
     }
 
     // доступные геттеры и сеттеры
@@ -44,9 +48,7 @@ public class FruitToStorageInfo implements Cloneable {
         this.price = price;
     }
 
-    public enum FruitType {
-        APPLE, PEAR, BANANA, APRICOT;
-    }
+
     // equals + hashCode + toString
 
     @Override

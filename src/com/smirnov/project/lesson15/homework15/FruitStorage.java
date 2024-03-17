@@ -2,9 +2,6 @@ package com.smirnov.project.lesson15.homework15;
 
 import java.util.*;
 
-import static java.lang.Math.max;
-import static java.lang.Math.min;
-
 // склад содержит информацию о добавленных фруктах+
 public class FruitStorage {
     // максимальное количество фруктов
@@ -22,14 +19,15 @@ public class FruitStorage {
             throw new IllegalArgumentException("numberOfSlots должен быть положительным");
         }
         this.numberOfSlots = numberOfSlots;
-        numberOfEmptySlots = numberOfSlots;
+        this.numberOfEmptySlots = numberOfSlots;
     }
 
     // TODO: НАПИСАТЬ РЕАЛИЗАЦИЮ СЛЕДУЮЩИХ МЕТОДОВ
     public boolean addToStorage(FruitToStorageInfo toStorageInfo) {
         // Информация о фруктах добавляется в хранилище по следующим правилам:
         // 1. fruit не может быть null;
-        if (toStorageInfo == null || numberOfEmptySlots == 0) {
+        Objects.requireNonNull(toStorageInfo, "toStorageInfo=null.");
+        if (numberOfEmptySlots < toStorageInfo.getCount()) {
             return false;
         }
         // 2. fruit не может быть ссылкой на существующий элемент коллекции
@@ -38,8 +36,8 @@ public class FruitStorage {
         if (fruits.contains(toStorageInfo)) {
             for (FruitToStorageInfo fruit : fruits) {
                 if (fruit.equals(toStorageInfo)) {
-                    fruit.setCount(min(fruit.getCount() + toStorageInfo.getCount(), fruit.getCount() + numberOfEmptySlots));
-                    numberOfEmptySlots = max(numberOfEmptySlots - toStorageInfo.getCount(), 0);
+                    fruit.setCount(fruit.getCount() + toStorageInfo.getCount());
+                    numberOfEmptySlots = numberOfEmptySlots - toStorageInfo.getCount();
                     return true;
                 }
             }
@@ -48,13 +46,6 @@ public class FruitStorage {
         //   В противном случае добавлять toStorageInfo в коллекцию fruits.
         //   numberOfSlots уменьшается на значение count добавляемого фрукта.
         // 4. в хранилище нельзя добавить больше numberOfSlots фруктов
-        if (numberOfEmptySlots - toStorageInfo.getCount() < 0) {
-            FruitToStorageInfo fruitToStorageInfo = toStorageInfo.clone();
-            fruitToStorageInfo.setCount(numberOfEmptySlots);
-            fruits.add(fruitToStorageInfo);
-            numberOfEmptySlots = 0;
-            return true;
-        }
         fruits.add(toStorageInfo.clone());
         numberOfEmptySlots -= toStorageInfo.getCount();
         return true;
@@ -90,9 +81,8 @@ public class FruitStorage {
     public List<FruitToStorageInfo> getFruitsByTypeAndPrice(FruitToStorageInfo.FruitType fruitType, int maxPrice) {
         // maxPrice должна быть положительной, fruitType не null
         ArrayList<FruitToStorageInfo> fruitsByTypeAndPrice = new ArrayList<>();
-        if (fruitType == null) {
-            throw new NullPointerException(null);
-        } else if (maxPrice <= 0) {
+        Objects.requireNonNull(fruitType, "fruitType=null.");
+        if (maxPrice <= 0) {
             throw new IllegalArgumentException("maxPrice должна быть положительной");
         }
         for (FruitToStorageInfo fruit : fruits) {
@@ -122,8 +112,8 @@ public class FruitStorage {
         return numberOfSlots;
     }
 
-    public HashSet<FruitToStorageInfo> getFruits() {
-        return (HashSet<FruitToStorageInfo>) fruits.clone();
+    public Set<FruitToStorageInfo> getFruits() {
+        return (Set<FruitToStorageInfo>) fruits.clone();
     }
 
     @Override

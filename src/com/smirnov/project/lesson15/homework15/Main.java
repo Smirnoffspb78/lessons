@@ -1,5 +1,9 @@
 package com.smirnov.project.lesson15.homework15;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+
 import static com.smirnov.project.lesson15.homework15.FruitToStorageInfo.FruitType.*;
 
 public class Main {
@@ -36,6 +40,11 @@ public class Main {
         System.out.println(fruitToStorageInfo);
         System.out.println(fruitStorage);
 
+        int[]a={1,2,3};
+        ArrayList<Integer> arrayA=new ArrayList<>();
+        Collections.addAll(Arrays.asList(a));
+        Integer[] b=(Integer[]) arrayA.toArray();
+        System.out.println(b);
 
     }
 }
