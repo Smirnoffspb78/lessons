@@ -4,7 +4,7 @@ import java.util.Objects;
 
 // содержит информацию о фруктах,
 // которые будут добавляться на склад
-public class FruitToStorageInfo implements Cloneable {
+public class FruitToStorageInfo {
     private final FruitType type;
     private double price; // за один фрукт
     private int count; // количество добавляемых фруктов
@@ -12,8 +12,11 @@ public class FruitToStorageInfo implements Cloneable {
     // конструктор, принимающий значения всех свойств + проверки
     public FruitToStorageInfo(FruitType type, double price, int count) {
         Objects.requireNonNull(type, "type=null");
-        setPrice(price);
-        setCount(count);
+        if (price <= 0 || count < 1) {
+            throw new IllegalArgumentException("price должен быть положительными");
+        }
+        this.price = price;
+        this.count = count;
         this.type = type;
     }
 
@@ -69,16 +72,4 @@ public class FruitToStorageInfo implements Cloneable {
     public int hashCode() {
         return Objects.hash(type, price);
     }
-
-    @Override
-    public FruitToStorageInfo clone() {
-        FruitToStorageInfo fruit;
-        try {
-            fruit = (FruitToStorageInfo) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new RuntimeException(e);
-        }
-        return fruit;
-    }
-
 }

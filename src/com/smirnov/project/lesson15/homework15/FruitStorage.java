@@ -11,8 +11,8 @@ public class FruitStorage {
     private int numberOfEmptySlots;
 
     // коллекция fruits, для хранения экземпляров FruitToStorageInfo
-    private final HashSet<FruitToStorageInfo> fruits = new HashSet<>();
-    // TODO: КОЛЛЕКЦИЮ ВЫБРАТЬ САМОСТОЯТЕЛЬНО: HashSet: для проверки наличия элемента в коллекции по методу equals (contains): O(1) по хэшкоду.
+    private final List<FruitToStorageInfo> fruits = new LinkedList<>();
+    // TODO: КОЛЛЕКЦИЮ ВЫБРАТЬ САМОСТОЯТЕЛЬНО:
 
     public FruitStorage(int numberOfSlots) {
         if (numberOfSlots < 0) {
@@ -23,30 +23,31 @@ public class FruitStorage {
     }
 
     // TODO: НАПИСАТЬ РЕАЛИЗАЦИЮ СЛЕДУЮЩИХ МЕТОДОВ
-    public boolean addToStorage(FruitToStorageInfo toStorageInfo) {
+    public boolean addToStorage(FruitToStorageInfo toStorageInfo) throws MaxCountExceededException {
         // Информация о фруктах добавляется в хранилище по следующим правилам:
         // 1. fruit не может быть null;
         Objects.requireNonNull(toStorageInfo, "toStorageInfo=null.");
         if (numberOfEmptySlots < toStorageInfo.getCount()) {
-            return false;
+            throw new MaxCountExceededException("Свободных мест на складе: ", numberOfEmptySlots);
         }
         // 2. fruit не может быть ссылкой на существующий элемент коллекции
         // 3. если в коллекции fruits уже есть фрукт с типом и ценой, как у toStorageInfo,         // п.3 является исключающим для п.2., Проверка по equals является достаточно для не добавления нового экземпляра в коллекцию, при этом contains не является достаточным для добавления в любом случае
         //   увеличивать значение свойства count фрукта коллекции на значение свойства count toStorageInfo.
-        if (fruits.contains(toStorageInfo)) {
-            for (FruitToStorageInfo fruit : fruits) {
-                if (fruit.equals(toStorageInfo)) {
-                    fruit.setCount(fruit.getCount() + toStorageInfo.getCount());
-                    numberOfEmptySlots = numberOfEmptySlots - toStorageInfo.getCount();
-                    return true;
-                }
+        for (FruitToStorageInfo fruit : fruits) {
+            if (fruit == toStorageInfo) {
+                throw new IllegalArgumentException("Повторное добавление объекта в коллекцию не возможно");
+            }
+            if (fruit.equals(toStorageInfo)) {
+                fruit.setCount(fruit.getCount() + toStorageInfo.getCount());
+                numberOfEmptySlots -= toStorageInfo.getCount();
+                return true;
             }
         }
 
         //   В противном случае добавлять toStorageInfo в коллекцию fruits.
         //   numberOfSlots уменьшается на значение count добавляемого фрукта.
         // 4. в хранилище нельзя добавить больше numberOfSlots фруктов
-        fruits.add(toStorageInfo.clone());
+        fruits.add(toStorageInfo);
         numberOfEmptySlots -= toStorageInfo.getCount();
         return true;
     }
@@ -80,14 +81,14 @@ public class FruitStorage {
     // с типом fruitType и ценой не выше maxPrice
     public List<FruitToStorageInfo> getFruitsByTypeAndPrice(FruitToStorageInfo.FruitType fruitType, int maxPrice) {
         // maxPrice должна быть положительной, fruitType не null
-        ArrayList<FruitToStorageInfo> fruitsByTypeAndPrice = new ArrayList<>();
+        List<FruitToStorageInfo> fruitsByTypeAndPrice = new ArrayList<>();
         Objects.requireNonNull(fruitType, "fruitType=null.");
         if (maxPrice <= 0) {
             throw new IllegalArgumentException("maxPrice должна быть положительной");
         }
         for (FruitToStorageInfo fruit : fruits) {
             if (fruit.getType() == fruitType && fruit.getPrice() <= maxPrice) {
-                fruitsByTypeAndPrice.add(fruit.clone());
+                fruitsByTypeAndPrice.add(fruit);
             }
         }
         return fruitsByTypeAndPrice;
@@ -110,10 +111,6 @@ public class FruitStorage {
 
     public int getNumberOfSlots() {
         return numberOfSlots;
-    }
-
-    public Set<FruitToStorageInfo> getFruits() {
-        return (Set<FruitToStorageInfo>) fruits.clone();
     }
 
     @Override
