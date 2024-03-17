@@ -101,7 +101,6 @@ public class Fitness {
                 !checkAvailabilityMembership(membershipGroupClasses, counterGroupClasses, membership, GROUP_CLASSES)) {
             return false;
         }
-        logger.info("%s добавлен в группу %s%nДата и время посещения: %s".formatted(membership.getOwnerMembership(), typeFitness.getName(), LocalDateTime.now()));
         switch (typeFitness) {
             case GYM -> membershipsGym[counterGym++] = membership;
             case SWIMMING_POOL -> membershipSwimmingPool[counterSwimmingPool++] = membership;
@@ -109,6 +108,7 @@ public class Fitness {
             default ->
                     throw new IllegalArgumentException("В метод registration передано недопустимое значение: " + typeFitness);
         }
+        logger.info("%s добавлен в группу %s%nДата и время посещения: %s".formatted(membership.getOwnerMembership(), typeFitness.getName(), LocalDateTime.now()));
         return true;
     }
 
