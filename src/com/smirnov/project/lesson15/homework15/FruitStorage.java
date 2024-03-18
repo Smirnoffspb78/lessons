@@ -28,14 +28,14 @@ public class FruitStorage {
         // 1. fruit не может быть null;
         Objects.requireNonNull(toStorageInfo, "toStorageInfo=null.");
         if (numberOfEmptySlots < toStorageInfo.getCount()) {
-            throw new MaxCountExceededException("Свободных мест на складе: ", numberOfEmptySlots);
+            throw new MaxCountExceededException(numberOfEmptySlots);
         }
         // 2. fruit не может быть ссылкой на существующий элемент коллекции
         // 3. если в коллекции fruits уже есть фрукт с типом и ценой, как у toStorageInfo,         // п.3 является исключающим для п.2., Проверка по equals является достаточно для не добавления нового экземпляра в коллекцию, при этом contains не является достаточным для добавления в любом случае
         //   увеличивать значение свойства count фрукта коллекции на значение свойства count toStorageInfo.
         for (FruitToStorageInfo fruit : fruits) {
             if (fruit == toStorageInfo) {
-                throw new IllegalArgumentException("Повторное добавление объекта в коллекцию не возможно");
+                return false;
             }
             if (fruit.equals(toStorageInfo)) {
                 fruit.setCount(fruit.getCount() + toStorageInfo.getCount());
@@ -82,7 +82,7 @@ public class FruitStorage {
     public List<FruitToStorageInfo> getFruitsByTypeAndPrice(FruitToStorageInfo.FruitType fruitType, int maxPrice) {
         // maxPrice должна быть положительной, fruitType не null
         List<FruitToStorageInfo> fruitsByTypeAndPrice = new ArrayList<>();
-        Objects.requireNonNull(fruitType, "fruitType=null.");
+        if (fruitType==null) return fruitsByTypeAndPrice;
         if (maxPrice <= 0) {
             throw new IllegalArgumentException("maxPrice должна быть положительной");
         }
@@ -108,6 +108,12 @@ public class FruitStorage {
         return minPrice;
     }
 
+    public List<FruitToStorageInfo> compareFruit(Comparator<FruitToStorageInfo> comparator){
+        Objects.requireNonNull(comparator, "comparator=null");
+        List<FruitToStorageInfo> copyFruit=new ArrayList<>(fruits);
+        copyFruit.sort(comparator);
+        return copyFruit;
+    }
 
     public int getNumberOfSlots() {
         return numberOfSlots;

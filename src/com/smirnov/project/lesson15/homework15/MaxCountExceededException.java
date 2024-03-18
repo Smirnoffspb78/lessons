@@ -5,18 +5,19 @@ package com.smirnov.project.lesson15.homework15;
  */
 public class MaxCountExceededException extends Exception {
     private final int numberOfEmptySlots;
+    private final String message;
 
     /**
      * Конструктор создается исключение.
      */
-    public MaxCountExceededException(String message, int numberOfEmptySlots) {
-        super(message);
+    public MaxCountExceededException(int numberOfEmptySlots) {
+        message = "Свободных мест на складе: %d".formatted(numberOfEmptySlots);
         this.numberOfEmptySlots = numberOfEmptySlots;
     }
 
     @Override
     public String getMessage() {
-        return super.getMessage() + numberOfEmptySlots;
+        return message;
     }
 
     public int getNumberOfEmptySlots() {

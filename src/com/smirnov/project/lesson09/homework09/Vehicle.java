@@ -1,5 +1,7 @@
 package com.smirnov.project.lesson09.homework09;
 
+import java.util.Objects;
+
 /**
  * Транспортное средство.
  */
@@ -69,5 +71,17 @@ public class Vehicle {
 
     public void setNumber(String number) {
         this.number = number;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Vehicle vehicle)) return false;
+        return wearLevel == vehicle.wearLevel && speedMax == vehicle.speedMax && Objects.equals(number, vehicle.number);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(number, wearLevel, speedMax);
     }
 }

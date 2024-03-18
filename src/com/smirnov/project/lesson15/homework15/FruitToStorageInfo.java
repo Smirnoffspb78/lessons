@@ -72,4 +72,5 @@ public class FruitToStorageInfo {
     public int hashCode() {
         return Objects.hash(type, price);
     }
+
 }
