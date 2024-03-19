@@ -8,7 +8,8 @@ import java.util.Objects;
  */
 public class ComparatorsFruits {
 
-    private ComparatorsFruits(){}
+    private ComparatorsFruits() {
+    }
 
     private static void checkNull(FruitToStorageInfo fruit1, FruitToStorageInfo fruit2) {
         Objects.requireNonNull(fruit1, "fruit1=null.");

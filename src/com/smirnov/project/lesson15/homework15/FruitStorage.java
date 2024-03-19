@@ -82,7 +82,7 @@ public class FruitStorage {
     public List<FruitToStorageInfo> getFruitsByTypeAndPrice(FruitToStorageInfo.FruitType fruitType, int maxPrice) {
         // maxPrice должна быть положительной, fruitType не null
         List<FruitToStorageInfo> fruitsByTypeAndPrice = new ArrayList<>();
-        if (fruitType==null) return fruitsByTypeAndPrice;
+        if (fruitType == null) return fruitsByTypeAndPrice;
         if (maxPrice <= 0) {
             throw new IllegalArgumentException("maxPrice должна быть положительной");
         }
@@ -108,9 +108,9 @@ public class FruitStorage {
         return minPrice;
     }
 
-    public List<FruitToStorageInfo> compareFruit(Comparator<FruitToStorageInfo> comparator){
+    public List<FruitToStorageInfo> compareFruit(Comparator<FruitToStorageInfo> comparator) {
         Objects.requireNonNull(comparator, "comparator=null");
-        List<FruitToStorageInfo> copyFruit=new ArrayList<>(fruits);
+        List<FruitToStorageInfo> copyFruit = new ArrayList<>(fruits);
         copyFruit.sort(comparator);
         return copyFruit;
     }

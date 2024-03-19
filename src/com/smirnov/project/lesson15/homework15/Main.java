@@ -62,17 +62,17 @@ public class Main {
         fruitStorage.increasePrice(10);
         System.out.println("Коллекция после изменения цены" + fruitStorage);
 
-        Comparator<FruitToStorageInfo> comparatorOfNumber=new ComparatorsFruits.NumberOfFruits();
-        System.out.println("Отсортированный склад по количеству фруктов: "+fruitStorage.compareFruit(comparatorOfNumber));
+        Comparator<FruitToStorageInfo> comparatorOfNumber = new ComparatorsFruits.NumberOfFruits();
+        System.out.println("Отсортированный склад по количеству фруктов: " + fruitStorage.compareFruit(comparatorOfNumber));
 
-        Comparator <FruitToStorageInfo> comparatorType=new ComparatorsFruits.TypeOfFruit();
-        System.out.println("Отсортированный склад по типу"+fruitStorage.compareFruit(comparatorType));
+        Comparator<FruitToStorageInfo> comparatorType = new ComparatorsFruits.TypeOfFruit();
+        System.out.println("Отсортированный склад по типу" + fruitStorage.compareFruit(comparatorType));
 
-        Comparator<FruitToStorageInfo> comparatorPrice=new ComparatorsFruits.PriceOfFruit();
-        System.out.println("Отсортированный склад по стоимости"+fruitStorage.compareFruit(comparatorPrice));
+        Comparator<FruitToStorageInfo> comparatorPrice = new ComparatorsFruits.PriceOfFruit();
+        System.out.println("Отсортированный склад по стоимости" + fruitStorage.compareFruit(comparatorPrice));
 
-        Comparator<FruitToStorageInfo> comparatorNumberAndPrice=new ComparatorsFruits.NumberAndPriceFruit();
-        System.out.println("Склад, отсортированный пок количеству по возрастанию и по убыванию цены"+fruitStorage.compareFruit(comparatorNumberAndPrice));
+        Comparator<FruitToStorageInfo> comparatorNumberAndPrice = new ComparatorsFruits.NumberAndPriceFruit();
+        System.out.println("Склад, отсортированный пок количеству по возрастанию и по убыванию цены" + fruitStorage.compareFruit(comparatorNumberAndPrice));
     }
 
     public static void maxCountExceededExceptionHandling(MaxCountExceededException e, FruitToStorageInfo fruitToStorageInfo, FruitStorage fruitStorage) {
