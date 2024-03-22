@@ -12,14 +12,16 @@ public class HomeWork17 {
      * Возвращает количество одинаковых слов в коллекции в виде Map.
      *
      * @param strings Коллекция слов
-     * @return Map<String, Long>, где ключи - слова, а значения - количество повторений.
+     * @return Map, где ключи - слова, а значения - количество повторений.
      */
     static Map<String, Long> frequencyOfWord(Collection<String> strings) {
         Objects.requireNonNull(strings);
-        if (strings.isEmpty()) return new HashMap<>();
+        if (strings.isEmpty()) {
+            return new HashMap<>();
+        }
         Map<String, Long> wordMap = new HashMap<>();
         for (String string : strings) {
-            if (!string.isBlank()) {
+            if (string != null && !string.isBlank()) {
                 wordMap.put(string, wordMap.getOrDefault(string.toLowerCase(), 0L) + 1L);
             }
         }
@@ -37,8 +39,14 @@ public class HomeWork17 {
     static Map<String, Long> frequencyOfWord(String text, String word) {
         Objects.requireNonNull(text);
         Objects.requireNonNull(word);
-        if (word.isBlank()) throw new IllegalArgumentException("word is blank");
-        if (text.isBlank()) return new HashMap<>();
+        if (word.isBlank()) {
+            throw new IllegalArgumentException("word is blank");
+        }
+        if (text.isBlank()) {
+            Map<String, Long> wordMap = new HashMap<>();
+            wordMap.put(word, 0L);
+            return wordMap;
+        }
         Map<String, Long> wordMap = new HashMap<>();
         String[] words = text.split(" ");
         long counter = 0;
@@ -60,7 +68,9 @@ public class HomeWork17 {
      */
     static Map<Integer, List<String>> numberOfLettersInWords(String text) {
         Objects.requireNonNull(text);
-        if (text.isBlank()) return new HashMap<>();
+        if (text.isBlank()) {
+            return new HashMap<>();
+        }
         Map<Integer, List<String>> numberOfLetterAndWords = new HashMap<>();
         List<String> wordList = new ArrayList<>();
         String[] words = text.split(" ");
@@ -80,7 +90,9 @@ public class HomeWork17 {
      */
     public static void topTenWord(String text) {
         Objects.requireNonNull(text);
-        if (text.isBlank()) System.out.println("Список пустой");
+        if (text.isBlank()) {
+            System.out.println("Список пустой");
+        }
         int topWord = 10;
         Map<String, Integer> wordsMap = new HashMap<>();
         String[] words = text.split(" ");
@@ -89,18 +101,16 @@ public class HomeWork17 {
                 wordsMap.put(word, wordsMap.getOrDefault(word.toLowerCase(), 0) + 1);
             }
         }
-        List<Map.Entry<String, Integer>> wordTopMap = new ArrayList<>(wordsMap.entrySet());
-        wordTopMap.sort(new Comparator<Map.Entry<String, Integer>>() {
+        List<Map.Entry<String, Integer>> wordTopList = new ArrayList<>(wordsMap.entrySet());
+        wordTopList.sort(new Comparator<Map.Entry<String, Integer>>() {
             @Override
             public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
                 return o2.getValue() - (o1.getValue());
             }
         });
-        List<String> wordTop = new ArrayList<>(topWord);
-        int length = min(wordTopMap.size(), topWord);
+        int length = min(wordTopList.size(), topWord);
         for (int i = 0; i < length; i++) {
-            wordTop.add(wordTopMap.get(i).getKey());
+            System.out.println(wordTopList.get(i).getKey());
         }
-        System.out.println(wordTop);
     }
 }
