@@ -14,7 +14,7 @@ public class HomeWork17 {
      * @param strings Коллекция слов
      * @return Map, где ключи - слова, а значения - количество повторений.
      */
-    static Map<String, Long> frequencyOfWord(Collection<String> strings) {
+    public static Map<String, Long> frequencyOfWord(Collection<String> strings) {
         Objects.requireNonNull(strings);
         if (strings.isEmpty()) {
             return new HashMap<>();
@@ -22,7 +22,7 @@ public class HomeWork17 {
         Map<String, Long> wordMap = new HashMap<>();
         for (String string : strings) {
             if (string != null && !string.isBlank()) {
-                wordMap.put(string, wordMap.getOrDefault(string.toLowerCase(), 0L) + 1L);
+                wordMap.put(string.toLowerCase(), wordMap.getOrDefault(string.toLowerCase(), 0L) + 1L);
             }
         }
         return wordMap;
@@ -36,7 +36,7 @@ public class HomeWork17 {
      * @param word Слово
      * @return Map, где ключ - слово, значение - частота встречаемости
      */
-    static Map<String, Long> frequencyOfWord(String text, String word) {
+    public static Map<String, Long> frequencyOfWord(String text, String word) {
         Objects.requireNonNull(text);
         Objects.requireNonNull(word);
         if (word.isBlank()) {
@@ -55,8 +55,7 @@ public class HomeWork17 {
                 counter++;
             }
         }
-        wordMap.put(word, counter);
-        return wordMap;
+        return Map.of(word, counter);
     }
 
 
@@ -66,27 +65,29 @@ public class HomeWork17 {
      * @param text Текст
      * @return Map
      */
-    static Map<Integer, List<String>> numberOfLettersInWords(String text) {
+    public static Map<Integer, List<String>> numberOfLettersInWords(String text) {
         Objects.requireNonNull(text);
         if (text.isBlank()) {
             return new HashMap<>();
         }
         Map<Integer, List<String>> numberOfLetterAndWords = new HashMap<>();
-        List<String> wordList = new ArrayList<>();
         String[] words = text.split(" ");
         for (String word : words) {
             if (!word.isBlank()) {
-                wordList.add(word);
+                if (numberOfLetterAndWords.containsKey(word.length())) {
+                    if (!numberOfLetterAndWords.get(word.length()).contains(word)) {
+                        numberOfLetterAndWords.get(word.length()).add(word);
+                    }
+                } else {
+                    numberOfLetterAndWords.put(word.length(), new ArrayList<>(List.of(word)));
+                }
             }
         }
-        numberOfLetterAndWords.put(text.replaceAll(" ", "").length(), wordList);
         return numberOfLetterAndWords;
     }
 
     /**
      * Выводит на экран топ 10 слов.
-     *
-     * @param text Текст
      */
     public static void topTenWord(String text) {
         Objects.requireNonNull(text);
@@ -98,7 +99,7 @@ public class HomeWork17 {
         String[] words = text.split(" ");
         for (String word : words) {
             if (!word.isBlank()) {
-                wordsMap.put(word, wordsMap.getOrDefault(word.toLowerCase(), 0) + 1);
+                wordsMap.put(word.toLowerCase(), wordsMap.getOrDefault(word.toLowerCase(), 0) + 1);
             }
         }
         List<Map.Entry<String, Integer>> wordTopList = new ArrayList<>(wordsMap.entrySet());
@@ -110,7 +111,7 @@ public class HomeWork17 {
         });
         int length = min(wordTopList.size(), topWord);
         for (int i = 0; i < length; i++) {
-            System.out.println(wordTopList.get(i).getKey());
+            System.out.print(wordTopList.get(i).getKey() + ", ");
         }
     }
 }
