@@ -12,4 +12,5 @@ public interface DeleteTask {
      * @return true/false если объект удален/не удален
      */
     boolean removeIf(List<Task> listTask);
+
 }
