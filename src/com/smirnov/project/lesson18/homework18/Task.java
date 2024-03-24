@@ -6,7 +6,14 @@ import java.util.Objects;
 /**
  * Задача.
  */
-public class Task implements Comparable<Task> {
+public class Task {
+
+    /**
+     * Статусы задач.
+     */
+    public enum Status {
+        NEW, IN_PROGRESS, CLOSED
+    }
     /**
      * Автоинкрементируемый счетчик.
      */
@@ -43,13 +50,6 @@ public class Task implements Comparable<Task> {
         status = Status.NEW;
         this.closeTo = closeTo;
         this.title = title;
-    }
-
-    /**
-     * Статусы задач.
-     */
-    public enum Status {
-        NEW, IN_PROGRESS, CLOSED
     }
 
     public void setStatus(Status status) {
@@ -90,20 +90,6 @@ public class Task implements Comparable<Task> {
         return "Task{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", status=" + status +
-                ", createdAt=" + createdAt +
-                ", closeTo=" + closeTo +
                 '}';
-    }
-
-    @Override
-    public int compareTo(Task otherTask) {
-        Objects.requireNonNull(otherTask);
-        if (this.closeTo.isBefore(otherTask.closeTo)) {
-            return -1;
-        } else if (this.closeTo.isAfter(otherTask.closeTo)) {
-            return 1;
-        }
-        return 0;
     }
 }
