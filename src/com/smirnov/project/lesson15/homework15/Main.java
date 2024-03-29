@@ -101,6 +101,12 @@ public class Main {
             }
             return fruit1.getCount() - fruit2.getCount();
         }));
+        Comparator comparatorOfCount=Comparator.comparingInt(FruitToStorageInfo::getCount);
+        Comparator comparatorOfPrice=Comparator.comparingDouble(FruitToStorageInfo::getPrice).reversed();
+
+        System.out.println("Склад, отсортированный пок количеству по возрастанию и по убыванию цены c помощью дефолтного метода"
+                + fruitStorage.compareFruit(comparatorOfCount.thenComparing(comparatorOfPrice)));
+
     }
 
     public static void maxCountExceededExceptionHandling(MaxCountExceededException e, FruitToStorageInfo fruitToStorageInfo, FruitStorage fruitStorage) {
