@@ -149,7 +149,7 @@ public class TaskTracker {
                 .collect(groupingBy(
                         taskToParticipant -> taskToParticipant.getParticipant().getId(),
                         Collectors.mapping(TaskToParticipant::getTask, Collectors.toList())
-                        ));
+                ));
     }
 
     // возвращает Map,
