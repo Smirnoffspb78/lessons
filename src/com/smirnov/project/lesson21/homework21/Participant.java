@@ -33,6 +33,9 @@ public class Participant {
      */
     private int maxTasks;
 
+    /**
+     * Список задач.
+     */
     private final List<Task> tasks = new ArrayList<>();
 
     /**
@@ -45,7 +48,9 @@ public class Participant {
      */
     public Participant(String name, boolean active, int experience, int maxTasks) {
         Objects.requireNonNull(name);
-        if (experience < 0 && maxTasks < 1) throw new IllegalArgumentException("experience<0, maxTasks<1");
+        if (experience < 0 && maxTasks < 1) {
+            throw new IllegalArgumentException("experience<0, maxTasks<1");
+        }
         id = ++countedId;
         this.name = name;
         this.active = active;
@@ -96,8 +101,12 @@ public class Participant {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Participant that)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Participant that)) {
+            return false;
+        }
 
         return id == that.id;
     }

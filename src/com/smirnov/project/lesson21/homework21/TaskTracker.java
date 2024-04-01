@@ -18,7 +18,7 @@ public class TaskTracker {
     /**
      * Список задач.
      */
-    private final Set<TaskToParticipant> tasks = new LinkedHashSet<>();
+    private final Set<TaskToParticipant> tasks = new HashSet<>();
 
     // taskPredicates - условия добавления задач. Тип данных определить самостоятельно
     // условие добавление задачи по умолчанию: задача должна быть открытой
@@ -100,7 +100,7 @@ public class TaskTracker {
             }
             if (check) {
                 for (ParticipantPredicate participantPredicate : participantPredicates) {
-                    check = participantPredicate.testParticipant(participant);
+                    check = participantPredicate.test(participant);
                     if (!check) {
                         break;
                     }
@@ -145,12 +145,11 @@ public class TaskTracker {
     // где ключи - идентификаторы исполнителей
     // значения - все его открытые задачи
     public Map<Integer, List<Task>> groupTasksByParticipantId() {
-        return tasks.stream()
+        return tasks.stream().filter(taskToParticipant -> taskToParticipant.getTask().getStatus() != CLOSED)
                 .collect(groupingBy(
                         taskToParticipant -> taskToParticipant.getParticipant().getId(),
-                        Collectors.filtering(taskToParticipant -> taskToParticipant.getTask().getStatus() != CLOSED,
-                                mapping(TaskToParticipant::getTask, Collectors.toList())
-                        )));
+                        Collectors.mapping(TaskToParticipant::getTask, Collectors.toList())
+                        ));
     }
 
     // возвращает Map,

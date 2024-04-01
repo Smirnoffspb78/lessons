@@ -54,11 +54,18 @@ public class TaskToParticipant {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof TaskToParticipant that)) return false;
-
-        if (progress != that.progress) return false;
-        if (!participant.equals(that.participant)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof TaskToParticipant that)) {
+            return false;
+        }
+        if (progress != that.progress) {
+            return false;
+        }
+        if (!participant.equals(that.participant)) {
+            return false;
+        }
         return task.equals(that.task);
     }
 

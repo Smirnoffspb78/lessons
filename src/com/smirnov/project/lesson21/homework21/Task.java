@@ -3,6 +3,8 @@ package com.smirnov.project.lesson21.homework21;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+import static com.smirnov.project.lesson21.homework21.Task.Status.*;
+
 /**
  * Задача.
  */
@@ -12,7 +14,19 @@ public class Task {
      * Статусы задач.
      */
     public enum Status {
-        NEW, IN_PROGRESS, CLOSED
+        NEW(1),
+        IN_PROGRESS(2),
+        CLOSED(3);
+
+        private final int numberProcess;
+
+        Status(int numberProcess) {
+            this.numberProcess = numberProcess;
+        }
+
+        public int getNumberProcess() {
+            return numberProcess;
+        }
     }
 
     /**
@@ -60,7 +74,7 @@ public class Task {
             throw new IllegalArgumentException();
         }
         id = ++countedId;
-        status = Status.NEW;
+        status = NEW;
         this.closeTo = closeTo;
         this.title = title;
         this.priority = priority;
@@ -68,16 +82,15 @@ public class Task {
 
     public void setStatus(Status status) {
         Objects.requireNonNull(status);
-        if (this.status == Status.IN_PROGRESS && status == Status.NEW) {
-            throw new IllegalArgumentException("Статус задачи понижаться не может");
-        } else if (this.status == Status.CLOSED && (status == Status.NEW || status == Status.IN_PROGRESS))
-            throw new IllegalArgumentException("Статус задачи понижаться не может");
+        if (status.getNumberProcess() <= this.status.getNumberProcess()) {
+            throw new IllegalArgumentException("Статус задачи должен повышаться");
+        }
         this.status = status;
     }
 
     public void setCloseTo(LocalDateTime closeTo) {
         Objects.requireNonNull(closeTo);
-        if (!closeTo.isAfter(createdAt) || status == Status.CLOSED) {
+        if (!closeTo.isAfter(createdAt) || status == CLOSED) {
             throw new IllegalArgumentException("Дата завершения должна быть позже даты создания. Нельзя изменить дату у уже завершенной задачи.");
         }
         this.closeTo = closeTo;
@@ -120,8 +133,12 @@ public class Task {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Task task)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Task task)) {
+            return false;
+        }
 
         return id == task.id;
     }
