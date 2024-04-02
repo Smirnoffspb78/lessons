@@ -6,7 +6,7 @@ import java.util.Objects;
 public class Author {
     private final String name;
     private final String email;
-    private LocalDate birth;
+    private final LocalDate birth;
 
     public Author(String name, String email, LocalDate birth) {
         this.name = name;
@@ -28,8 +28,12 @@ public class Author {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Author author)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Author author)) {
+            return false;
+        }
         return Objects.equals(email, author.email);
     }
 

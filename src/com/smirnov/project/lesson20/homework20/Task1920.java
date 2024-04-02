@@ -27,7 +27,7 @@ public class Task1920 {
         Article article3 = new Article("Статья3", HISTORY, author6);
         Article article4 = new Article(null, HISTORY, author6);
 
-        ArrayList<Article> articles = new ArrayList<>();
+        List<Article> articles = new ArrayList<>();
         articles.add(article);
         articles.add(article2);
         articles.add(article3);
@@ -44,43 +44,52 @@ public class Task1920 {
     }
 
 
-    public static double task01(ArrayList<Article> articles) {
+    public static double task01(List<Article> articles) {
         // Вернуть средний возраст авторов статей
         Objects.requireNonNull(articles);
-        return articles.stream().filter(Objects::nonNull).flatMap(article -> article.getAuthors().values().stream().distinct()).
-                filter(author -> author != null && author.getBirth() != null && LocalDate.now().isAfter(author.getBirth())).
-                mapToDouble(author -> LocalDate.now().getYear() - author.getBirth().getYear()).average().getAsDouble();
+        return articles.stream()
+                .filter(Objects::nonNull)
+                .flatMap(article -> article.getAuthors().values().stream().distinct())
+                .filter(author -> author != null && author.getBirth() != null && LocalDate.now().isAfter(author.getBirth()))
+                .mapToDouble(author -> LocalDate.now().getYear() - author.getBirth().getYear()).average().getAsDouble();
     }
 
-    public static List<String> task02(ArrayList<Article> articles, Article.Category category) {
+    public static List<String> task02(List<Article> articles, Article.Category category) {
         // Вернуть список email авторов статей категории == category
         Objects.requireNonNull(articles);
-        return articles.stream().filter(article -> article != null && article.getCategory() == category).
-                flatMap(article -> article.getAuthors().values().stream()).distinct().
-                filter(author -> author != null && author.getEmail() != null && !author.getEmail().isBlank()).
-                map(Author::getEmail).collect(Collectors.toCollection(ArrayList::new));
+        return articles.stream()
+                .filter(article -> article != null && article.getCategory() == category)
+                .flatMap(article -> article.getAuthors().values().stream())
+                .distinct()
+                .filter(author -> author != null && author.getEmail() != null && !author.getEmail().isBlank())
+                .map(Author::getEmail).collect(Collectors.toList());
 
     }
 
-    public static List<Article> task03(ArrayList<Article> articles, Article.Category category, int min, int max) {
+    public static List<Article> task03(List<Article> articles, Article.Category category, int min, int max) {
         // Вернуть список статей категории == category,
         // возраст авторов которых попадает в диапазон от min до max
         Objects.requireNonNull(articles);
         int year = LocalDate.now().getYear();
-        return articles.stream().filter(article -> article != null && article.getCategory() == category).distinct().
-                filter(article -> article.getAuthors().values().stream().filter(author -> author != null && author.getBirth() != null).
-                        allMatch(author -> year - author.getBirth().getYear() <= max && year - author.getBirth().getYear() >= min)).
-                collect(Collectors.toCollection(ArrayList::new));
+        return articles.stream()
+                .filter(article -> article != null && article.getCategory() == category)
+                .distinct()
+                .filter(article -> article.getAuthors().values().stream()
+                        .filter(author -> author != null && author.getBirth() != null)
+                        .allMatch(author -> year - author.getBirth().getYear() <= max && year - author.getBirth().getYear() >= min))
+                .collect(Collectors.toList());
     }
 
-    public static List<Article> task04(ArrayList<Article> articles, Article.Category category) {
+    public static List<Article> task04(List<Article> articles, Article.Category category) {
         Objects.requireNonNull(articles);
         if (articles.isEmpty()) {
             return new ArrayList<>();
         }
         // Вернуть список статей категории == category, опубликованных сегодня
-        return articles.stream().filter(article -> article!=null && article.getCategory() == category).distinct().
-                filter(article -> article.getPublished() != null && article.getPublished().toLocalDate().equals(LocalDate.now()))
-                .collect(Collectors.toCollection(ArrayList::new));
+        return articles.stream()
+                .filter(article -> article!=null && article.getCategory() == category)
+                .distinct()
+                .filter(article -> article.getPublished() != null && article.getPublished().toLocalDate().equals(LocalDate.now()))
+                .collect(Collectors.toList());
     }
 }

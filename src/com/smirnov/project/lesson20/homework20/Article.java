@@ -2,6 +2,7 @@ package com.smirnov.project.lesson20.homework20;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class Article {
@@ -30,7 +31,7 @@ public class Article {
         return category;
     }
 
-    public HashMap<String, Author> getAuthors() {
+    public Map<String, Author> getAuthors() {
         return authors;
     }
 
@@ -44,9 +45,16 @@ public class Article {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Article article)) return false;
-        return Objects.equals(authors, article.authors) && Objects.equals(title, article.title) && category == article.category && Objects.equals(published, article.published);
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Article article)) {
+            return false;
+        }
+        return Objects.equals(authors, article.authors)
+                && Objects.equals(title, article.title)
+                && category == article.category
+                && Objects.equals(published, article.published);
     }
 
     @Override
@@ -56,9 +64,6 @@ public class Article {
 
     @Override
     public String toString() {
-        return "Article{" +
-                "title='" + title + '\'' +
-                ", category=" + category +
-                '}';
+        return "Article{title='%s', category=%s}".formatted(title, category);
     }
 }
