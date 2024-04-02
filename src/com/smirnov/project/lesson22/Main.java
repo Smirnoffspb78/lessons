@@ -54,10 +54,6 @@ public class Main {
                     currentTemperature = value;
                 }
             }
-
-            public double getCurrentTemperature() {
-                return currentTemperature;
-            }
         };
         Reactionable green = new Reactionable() {
             private double currentTemperature;
@@ -73,10 +69,6 @@ public class Main {
                     out.println("Зеленый.Температура " + value + " oC");
                     currentTemperature = value;
                 }
-            }
-
-            public double getCurrentTemperature() {
-                return currentTemperature;
             }
         };
 
@@ -94,10 +86,6 @@ public class Main {
                     out.println("Желтый.Температура " + value + " oC");
                     currentTemperature = value;
                 }
-            }
-
-            public double getCurrentTemperature() {
-                return currentTemperature;
             }
         };
 
