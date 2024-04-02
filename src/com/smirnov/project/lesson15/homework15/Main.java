@@ -107,6 +107,7 @@ public class Main {
         System.out.println("Склад, отсортированный пок количеству по возрастанию и по убыванию цены c помощью дефолтного метода"
                 + fruitStorage.compareFruit(comparatorOfCount.thenComparing(comparatorOfPrice)));
 
+
     }
 
     public static void maxCountExceededExceptionHandling(MaxCountExceededException e, FruitToStorageInfo fruitToStorageInfo, FruitStorage fruitStorage) {
