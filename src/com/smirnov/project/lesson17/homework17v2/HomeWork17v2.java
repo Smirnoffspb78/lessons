@@ -13,21 +13,23 @@ public class HomeWork17v2 {
     /**
      * Возвращает список транспортных средств, уровень износа которых больше переданного значения.
      *
-     * @param vehicleMap  Map транспортных средств
+
+     * @param vehicle     Map транспортных средств
      * @param levelOfWear Уровень износа
-     * @param <T>         extends Vehicle
+     * @param T           extends Vehicle
      * @return Список транспортных средств, уровень износа которых больше переданного
      */
-    public static <T extends Vehicle> List<T> vehiclesWithLevelOfWear(Map<String, T> vehicleMap, int levelOfWear) {
-        Objects.requireNonNull(vehicleMap);
+    public static <T extends Vehicle> List<T> vehiclesWithLevelOfWear(Map<String, T> vehicle, int levelOfWear) {
+        Objects.requireNonNull(vehicle);
         if (levelOfWear < 0 || levelOfWear > 100) {
             throw new IllegalArgumentException("levelOfWear<0 или levelOfWear>100");
         }
-        if (vehicleMap.isEmpty()) {
+        if (vehicle.isEmpty()) {
             return new ArrayList<>();
         }
         List<T> vehiclesWithLevel = new ArrayList<>();
-        for (T value : vehicleMap.values()) {
+        for (T value : vehicle.values()) {
+
             Objects.requireNonNull(value);
             if (value.getLevelOfWare() > levelOfWear) {
                 vehiclesWithLevel.add(value);
@@ -39,20 +41,22 @@ public class HomeWork17v2 {
     /**
      * Возвращает список транспортных средств, уровень износа которых больше переданного значения (вариант с Wildcard).
      *
-     * @param vehicleMap  Map транспортных средств
+
+     * @param vehicle     Map транспортных средств
      * @param levelOfWear Уровень износа
      * @return Список транспортных средств, уровень износа которых больше переданного
      */
-    public static List<?> vehiclesWithLevelOfWear2(Map<String, ? extends Vehicle> vehicleMap, int levelOfWear) {
-        Objects.requireNonNull(vehicleMap);
+    public static List<?> vehiclesWithLevelOfWear2(Map<String, ? extends Vehicle> vehicle, int levelOfWear) {
+        Objects.requireNonNull(vehicle);
         if (levelOfWear < 0 || levelOfWear > 100) {
             throw new IllegalArgumentException("levelOfWear<0 или levelOfWear>100");
         }
-        if (vehicleMap.isEmpty()) {
+        if (vehicle.isEmpty()) {
             return new ArrayList<>();
         }
         List<? super Vehicle> vehiclesWithLevel = new ArrayList<>();
-        for (Vehicle value : vehicleMap.values()) {
+        for (Vehicle value : vehicle.values()) {
+
             Objects.requireNonNull(value);
             if (value.getLevelOfWare() > levelOfWear) {
                 vehiclesWithLevel.add(value);
@@ -66,14 +70,14 @@ public class HomeWork17v2 {
      *
      * @param vehicle    Транспортные средства
      * @param mapRepaint Map, где ключ - цвет, список - транспортные средства с цветом по ключу
-     * @param <T>        extends Vehicle & Repaintable
+
+     * @param T          extends Vehicle & Repaintable
+
      */
     public static <T extends Vehicle & Repaintable> void repaintVehicle(List<T> vehicle, Map<Repaintable.Color, List<T>> mapRepaint) {
         Objects.requireNonNull(vehicle);
         Objects.requireNonNull(mapRepaint);
-        for (List<T> value : mapRepaint.values()) {
-            Objects.requireNonNull(value);
-        }
+
         for (T t : vehicle) {
             Objects.requireNonNull(t);
             if (mapRepaint.containsKey(t.getColor())) {
@@ -86,7 +90,8 @@ public class HomeWork17v2 {
      * Возвращает Map отремонтированных транспортных средств.
      *
      * @param listVehicle Список транспортных средств
-     * @param <T>         extends Vehicle
+     * @param T           extends Vehicle
+
      * @return Map, где ключ - номер транспортного средства, значение - транспортное средство
      */
     public static <T extends Vehicle> Map<String, T> vehicleRepair(List<T> listVehicle) {
@@ -97,10 +102,14 @@ public class HomeWork17v2 {
         Map<String, T> mapVehicle = new HashMap<>();
         for (T t : listVehicle) {
             Objects.requireNonNull(t);
+            t.repair();
+            mapVehicle.put(t.getNumber(), t);
+
             if (!mapVehicle.containsKey(t.getNumber())) {
                 t.repair();
                 mapVehicle.put(t.getNumber(), t);
             }
+
         }
         return mapVehicle;
     }
@@ -119,6 +128,8 @@ public class HomeWork17v2 {
         Map<String, ? super Vehicle> mapVehicle = new HashMap<>();
         for (Vehicle t : listVehicle) {
             Objects.requireNonNull(t);
+            t.repair();
+            mapVehicle.put(t.getNumber(), t);
             if (!mapVehicle.containsKey(t.getNumber())) {
                 t.repair();
                 mapVehicle.put(t.getNumber(), t);
