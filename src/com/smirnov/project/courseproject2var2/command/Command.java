@@ -8,24 +8,46 @@ import static java.util.Objects.requireNonNull;
  * Команда.
  */
 public abstract class Command {
+
     /**
-     * Игра.
+     * Наименование команды.
      */
-    Game game;
+    String nameCommand;
 
     /**
      * Конструктор создает команду для игры.
      *
-     * @param game Игра
+     * @param nameCommand Название команды
      */
-    Command(Game game) {
-        requireNonNull(game);
-        this.game = game;
+    Command(String nameCommand) {
+        requireNonNull(nameCommand);
+        this.nameCommand = nameCommand;
     }
 
     /**
      * Выполнить команду.
      */
-    public abstract void execute();
+    public abstract void execute(Game game);
+
+    public String getNameCommand() {
+        return nameCommand;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Command command)) {
+            return false;
+        }
+
+        return nameCommand.equals(command.nameCommand);
+    }
+
+    @Override
+    public int hashCode() {
+        return nameCommand.hashCode();
+    }
 }
 

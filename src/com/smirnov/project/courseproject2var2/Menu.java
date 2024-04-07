@@ -18,21 +18,25 @@ public class Menu {
      */
     private final Map<String, Command> menuMap = new LinkedHashMap<>();
 
+    Game game;
     /**
      * Добавляет команду в Мапу
      *
-     * @param name    Имя команды.
      * @param command Команда.
-     * @return
+     * @return Меню
      */
-    public Menu addCommand(String name, Command command) {
-        requireNonNull(name);
+    public Menu addCommand(Command command) {
         requireNonNull(command);
-        if (menuMap.containsKey(name)) {
+        if (menuMap.containsKey(command.getNameCommand())) {
             return this;
         }
-        menuMap.put(name, command);
+        menuMap.put(command.getNameCommand(), command);
         return this;
+    }
+
+    public Menu(Game game) {
+        requireNonNull(game);
+        this.game = game;
     }
 
     /**
@@ -43,7 +47,7 @@ public class Menu {
     public boolean execute(String name) {
         requireNonNull(name);
         if (menuMap.containsKey(name)) {
-            menuMap.get(name).execute();
+            menuMap.get(name).execute(game);
             return true;
         } else {
             out.println("Неверная команда. Повторите ввод.");

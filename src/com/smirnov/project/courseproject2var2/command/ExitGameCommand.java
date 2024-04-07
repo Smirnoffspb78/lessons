@@ -10,17 +10,17 @@ public class ExitGameCommand extends Command {
     /**
      * Конструктор создает команду выхода из игры.
      *
-     * @param game Игра
+     * @param nameCommand наименование команды
      */
-    public ExitGameCommand(Game game) {
-        super(game);
+    public ExitGameCommand(String nameCommand) {
+        super(nameCommand);
     }
 
     /**
      * Выполнить команду.
      */
     @Override
-    public void execute() {
+    public void execute(Game game) {
         game.exitGame();
     }
 }

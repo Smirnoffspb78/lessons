@@ -10,17 +10,17 @@ public class SaveGameCommand extends Command {
     /**
      * Конструктор создает команду для сохранения игры.
      *
-     * @param game Игра
+     * @param nameCommand Наименование команды
      */
-    public SaveGameCommand(Game game) {
-        super(game);
+    public SaveGameCommand(String nameCommand) {
+        super(nameCommand);
     }
 
     /**
      * Выполнить команду.
      */
     @Override
-    public void execute() {
+    public void execute(Game game) {
         game.saveGame();
     }
 }

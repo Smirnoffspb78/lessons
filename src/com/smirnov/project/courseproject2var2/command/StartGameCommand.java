@@ -1,26 +1,28 @@
 package com.smirnov.project.courseproject2var2.command;
 
 import com.smirnov.project.courseproject2var2.Game;
+import com.smirnov.project.courseproject2var2.QuestFile;
 
 /**
  * Команда для запуска игрового процесса.
  */
 public class StartGameCommand extends Command {
 
+
     /**
      * Конструктор создает команду для запуска игрового процесса.
      *
-     * @param game Игра
+     * @param nameCommand Наименование команды
      */
-    public StartGameCommand(Game game) {
-        super(game);
+    public StartGameCommand(String nameCommand) {
+        super(nameCommand);
     }
 
     /**
      * Выполнить команду.
      */
     @Override
-    public void execute() {
-        game.startGame(game.getContinueName());
+    public void execute(Game game) {
+        game.startGame();
     }
 }
