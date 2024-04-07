@@ -13,10 +13,6 @@ public class HomeWork17v2 {
     /**
      * Возвращает список транспортных средств, уровень износа которых больше переданного значения.
      *
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/homework21
      * @param vehicle     Map транспортных средств
      * @param levelOfWear Уровень износа
      * @param T           extends Vehicle
@@ -32,10 +28,7 @@ public class HomeWork17v2 {
         }
         List<T> vehiclesWithLevel = new ArrayList<>();
         for (T value : vehicle.values()) {
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/homework21
             Objects.requireNonNull(value);
             if (value.getLevelOfWare() > levelOfWear) {
                 vehiclesWithLevel.add(value);
@@ -47,10 +40,6 @@ public class HomeWork17v2 {
     /**
      * Возвращает список транспортных средств, уровень износа которых больше переданного значения (вариант с Wildcard).
      *
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/homework21
      * @param vehicle     Map транспортных средств
      * @param levelOfWear Уровень износа
      * @return Список транспортных средств, уровень износа которых больше переданного
@@ -65,10 +54,7 @@ public class HomeWork17v2 {
         }
         List<? super Vehicle> vehiclesWithLevel = new ArrayList<>();
         for (Vehicle value : vehicle.values()) {
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/homework21
             Objects.requireNonNull(value);
             if (value.getLevelOfWare() > levelOfWear) {
                 vehiclesWithLevel.add(value);
@@ -82,21 +68,11 @@ public class HomeWork17v2 {
      *
      * @param vehicle    Транспортные средства
      * @param mapRepaint Map, где ключ - цвет, список - транспортные средства с цветом по ключу
-<<<<<<< HEAD
-
-     * @param T          extends Vehicle & Repaintable
-
-=======
-     * @param T          extends Vehicle & Repaintable
->>>>>>> origin/homework21
      */
     public static <T extends Vehicle & Repaintable> void repaintVehicle(List<T> vehicle, Map<Repaintable.Color, List<T>> mapRepaint) {
         Objects.requireNonNull(vehicle);
         Objects.requireNonNull(mapRepaint);
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/homework21
         for (T t : vehicle) {
             Objects.requireNonNull(t);
             if (mapRepaint.containsKey(t.getColor())) {
@@ -110,10 +86,6 @@ public class HomeWork17v2 {
      *
      * @param listVehicle Список транспортных средств
      * @param T           extends Vehicle
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/homework21
      * @return Map, где ключ - номер транспортного средства, значение - транспортное средство
      */
     public static <T extends Vehicle> Map<String, T> vehicleRepair(List<T> listVehicle) {
@@ -126,15 +98,11 @@ public class HomeWork17v2 {
             Objects.requireNonNull(t);
             t.repair();
             mapVehicle.put(t.getNumber(), t);
-<<<<<<< HEAD
 
             if (!mapVehicle.containsKey(t.getNumber())) {
                 t.repair();
                 mapVehicle.put(t.getNumber(), t);
             }
-
-=======
->>>>>>> origin/homework21
         }
         return mapVehicle;
     }
@@ -155,13 +123,11 @@ public class HomeWork17v2 {
             Objects.requireNonNull(t);
             t.repair();
             mapVehicle.put(t.getNumber(), t);
-<<<<<<< HEAD
             if (!mapVehicle.containsKey(t.getNumber())) {
                 t.repair();
                 mapVehicle.put(t.getNumber(), t);
             }
-=======
->>>>>>> origin/homework21
+
         }
         return mapVehicle;
     }

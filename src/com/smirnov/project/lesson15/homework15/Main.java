@@ -68,38 +68,29 @@ public class Main {
         System.out.println("Отсортированный склад по количеству фруктов функцией: " +
                 fruitStorage.compareFruit((fruit1, fruit2) -> (fruit2.getCount() - fruit1.getCount())));
 
-<<<<<<< HEAD
         System.out.println("Отсортированный склад по количеству фруктов с помощью дефолтного метода: " +
                 fruitStorage.compareFruit(Comparator.comparingInt(FruitToStorageInfo::getCount).reversed()));
 
 
-
-=======
->>>>>>> origin/homework21
         Comparator<FruitToStorageInfo> comparatorType = new ComparatorsFruits.TypeOfFruit();
         System.out.println("Отсортированный склад по типу" + fruitStorage.compareFruit(comparatorType));
 
         System.out.println("Отсортированный склад по типу с помощью функции"
                 + fruitStorage.compareFruit((fruit1, fruit2) -> fruit2.getType().compareTo(fruit1.getType())));
 
-<<<<<<< HEAD
         System.out.println("Отсортированный склад по типу с помощью дефолтного метода"
                 + fruitStorage.compareFruit(Comparator.comparing(FruitToStorageInfo::getType)));
 
-=======
->>>>>>> origin/homework21
         Comparator<FruitToStorageInfo> comparatorPrice = new ComparatorsFruits.PriceOfFruit();
         System.out.println("Отсортированный склад по стоимости" + fruitStorage.compareFruit(comparatorPrice));
 
         System.out.println("Отсортированный склад по стоимости с помощью функции"
                 + fruitStorage.compareFruit((fruit1, fruit2)-> Double.compare(fruit1.getPrice(), fruit2.getPrice())));
 
-<<<<<<< HEAD
         System.out.println("Отсортированный склад по стоимости с помощью дефолтного метода"
                 + fruitStorage.compareFruit(Comparator.comparingDouble(FruitToStorageInfo::getPrice)));
 
-=======
->>>>>>> origin/homework21
+
         Comparator<FruitToStorageInfo> comparatorNumberAndPrice = new ComparatorsFruits.NumberAndPriceFruit();
         System.out.println("Склад, отсортированный пок количеству по возрастанию и по убыванию цены" + fruitStorage.compareFruit(comparatorNumberAndPrice));
 
@@ -110,17 +101,14 @@ public class Main {
             }
             return fruit1.getCount() - fruit2.getCount();
         }));
-<<<<<<< HEAD
+
         Comparator comparatorOfCount=Comparator.comparingInt(FruitToStorageInfo::getCount);
         Comparator comparatorOfPrice=Comparator.comparingDouble(FruitToStorageInfo::getPrice).reversed();
 
         System.out.println("Склад, отсортированный пок количеству по возрастанию и по убыванию цены c помощью дефолтного метода"
-                + fruitStorage.compareFruit(comparatorOfCount.thenComparing(comparatorOfPrice)));
+                + fruitStorage.compareFruit(comparatorOfCount.thenComparing(comparatorOfPrice)));}
 
 
-=======
->>>>>>> origin/homework21
-    }
 
     public static void maxCountExceededExceptionHandling(MaxCountExceededException e, FruitToStorageInfo fruitToStorageInfo, FruitStorage fruitStorage) {
         if (e.getNumberOfEmptySlots() == 0) {
