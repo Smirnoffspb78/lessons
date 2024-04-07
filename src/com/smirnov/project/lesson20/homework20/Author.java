@@ -1,7 +1,6 @@
 package com.smirnov.project.lesson20.homework20;
 
 import java.time.LocalDate;
-import java.util.Objects;
 
 public class Author {
     private final String name;
@@ -34,11 +33,21 @@ public class Author {
         if (!(o instanceof Author author)) {
             return false;
         }
-        return Objects.equals(email, author.email);
+
+        if (!name.equals(author.name)) {
+            return false;
+        }
+        if (!email.equals(author.email)) {
+            return false;
+        }
+        return birth.equals(author.birth);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(email);
+        int result = name.hashCode();
+        result = 31 * result + email.hashCode();
+        result = 31 * result + birth.hashCode();
+        return result;
     }
 }
