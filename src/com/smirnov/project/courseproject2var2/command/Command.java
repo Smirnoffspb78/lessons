@@ -1,6 +1,6 @@
 package com.smirnov.project.courseproject2var2.command;
 
-import com.smirnov.project.courseproject2var2.Game;
+import com.smirnov.project.courseproject2var2.QuestFile;
 
 import static java.util.Objects.requireNonNull;
 
@@ -27,7 +27,7 @@ public abstract class Command {
     /**
      * Выполнить команду.
      */
-    public abstract void execute(Game game);
+    public abstract void execute(QuestFile questFile);
 
     public String getNameCommand() {
         return nameCommand;

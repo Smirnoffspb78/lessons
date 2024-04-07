@@ -1,6 +1,8 @@
 package com.smirnov.project.courseproject2var2.command;
 
-import com.smirnov.project.courseproject2var2.Game;
+import com.smirnov.project.courseproject2var2.QuestFile;
+
+import static java.lang.System.out;
 
 /**
  * Команда для выхода из игры.
@@ -20,7 +22,7 @@ public class ExitGameCommand extends Command {
      * Выполнить команду.
      */
     @Override
-    public void execute(Game game) {
-        game.exitGame();
+    public void execute(QuestFile questFile) {
+        out.println("До новых встреч!");
     }
 }

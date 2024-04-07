@@ -44,10 +44,10 @@ public class Menu {
      * @param name Имя команды
      * @return true/false - Если команда имеется в Меню/отсутствует в меню
      */
-    public boolean execute(String name) {
+    public boolean execute(String name, QuestFile questFile) {
         requireNonNull(name);
         if (menuMap.containsKey(name)) {
-            menuMap.get(name).execute(game);
+            menuMap.get(name).execute(questFile);
             return true;
         } else {
             out.println("Неверная команда. Повторите ввод.");

@@ -49,7 +49,7 @@ public class Game {
      *
      * @param numberQuest Наименование квеста.
      */
-    public void startGame(/*QuestFile questFile*/) {
+    public void startGame(String string) {
         /*requireNonNull(questFile);
         String numberQuest=questFile.getContinueName();
         out.println(questFile.getTextsMap().get(numberQuest));

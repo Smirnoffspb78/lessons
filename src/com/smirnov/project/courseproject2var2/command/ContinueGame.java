@@ -1,6 +1,6 @@
 package com.smirnov.project.courseproject2var2.command;
 
-import com.smirnov.project.courseproject2var2.Game;
+import com.smirnov.project.courseproject2var2.QuestFile;
 
 public class ContinueGame extends Command {
 
@@ -12,6 +12,6 @@ public class ContinueGame extends Command {
      * Выполнить команду.
      */
     @Override
-    public void execute(Game game) {
+    public void execute(QuestFile questFile) {
     }
 }

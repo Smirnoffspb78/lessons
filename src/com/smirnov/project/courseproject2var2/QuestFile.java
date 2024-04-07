@@ -3,6 +3,7 @@ package com.smirnov.project.courseproject2var2;
 import java.io.File;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Scanner;
 
 import static java.lang.System.in;
@@ -17,6 +18,7 @@ public class QuestFile {
      * Текущее название квеста.
      */
     private String continueName;
+    private String tempName;
 
     /**
      * Путь для сохранения и загрузки названия квеста
@@ -49,20 +51,26 @@ public class QuestFile {
      * Меню
      */
     private final Menu menu;
+
     public QuestFile(Menu menu) {
         requireNonNull(menu);
         this.menu = menu;
+
     }
 
-    void startQuest(){
-        boolean run;
-        for (String pointMenu : menu.getMenuMap().keySet()) {
-            if (!((pointMenu.equals("Сохранить игру") || pointMenu.equals("Продолжить игру")) /*&& game.getTempName() == null*/
-                    || pointMenu.equals("Загрузить игру") /*&& !game.getPathSaveAndDownload().exists()*/)) {
-                out.println(pointMenu);
+    void startQuest() {
+        String userInput = "";
+        while (!userInput.equals("Выйти из игры")) {
+            continueName=answersAndQuestions.keySet().stream()
+                    .findFirst()
+                    .orElse("");
+            for (String pointMenu : menu.getMenuMap().keySet()) {
+                if (!((pointMenu.equals("Сохранить игру") || pointMenu.equals("Продолжить игру")) && tempName == null
+                        || pointMenu.equals("Загрузить игру") /*&& !game.getPathSaveAndDownload().exists()*/)) {
+                    out.println(pointMenu);
+                }
             }
-        }
-        String userInput = scannerMenu.nextLine();
+            userInput = scannerMenu.nextLine();
         /*continueName = switch (userInput) {
             case "Продолжить игру" -> game.getTempName();
             case "Загрузить игру" -> {
@@ -79,9 +87,10 @@ public class QuestFile {
                     .orElse("");*/
           /*  default -> throw new IllegalStateException("Unexpected value: " + userInput);
         };*/
-        run = menu.execute(userInput);
-        if (!run) {
-            startQuest();
+            menu.execute(userInput, this);
+            if (userInput.equals("Загрузить игру")) {
+                /*menu.execute("")*/
+            }
         }
     }
 
@@ -113,6 +122,10 @@ public class QuestFile {
         return continueName;
     }
 
+    public String getTempName() {
+        return tempName;
+    }
+
     public Map<String, String> getTextsMap() {
         return textsMap;
     }
@@ -126,4 +139,17 @@ public class QuestFile {
         return "QuestFile{, answersAndQuestions=%s}".formatted(answersAndQuestions);
     }
 
+    public String getPathSaveAndDownload() {
+        return pathSaveAndDownload;
+    }
+
+    public void setTempName(String tempName) {
+        /*Objects.requireNonNull(tempName);*/
+        this.tempName = tempName;
+    }
+
+    public void setContinueName(String continueName) {
+        Objects.requireNonNull(continueName);
+        this.continueName = continueName;
+    }
 }
