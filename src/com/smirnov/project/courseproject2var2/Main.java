@@ -61,9 +61,9 @@ public class Main {
                 .addCommand(new ContinueGame("Продолжить игру"))
                 .addCommand(new ExitGameCommand("Выйти из игры"))
                 .addCommand(new SaveGameCommand("Сохранить игру"))
-                .addCommand(new DownloadGame("Сохранить игру"));
+                .addCommand(new DownloadGame("Загрузить игру"));
 
-        QuestFile questFile = new QuestFile( menu);
+        QuestFile questFile = new QuestFile(menu);
         questFile.addAnswersAndQuestions(qest1, qest1Map, quest1Text);
         questFile.addAnswersAndQuestions(qest2, qest2Map, quest2Text);
         questFile.addAnswersAndQuestions(qest3, qest3Map, quest3Text);

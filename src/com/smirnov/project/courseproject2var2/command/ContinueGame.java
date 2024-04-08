@@ -13,5 +13,7 @@ public class ContinueGame extends Command {
      */
     @Override
     public void execute(QuestFile questFile) {
+        questFile.continueGame();
+        questFile.startGameProcess();
     }
 }

@@ -1,13 +1,18 @@
 package com.smirnov.project.courseproject2var2;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Scanner;
 
 import static java.lang.System.in;
 import static java.lang.System.out;
+import static java.nio.file.Files.writeString;
+import static java.nio.file.Paths.get;
 import static java.util.Objects.requireNonNull;
 
 /**
@@ -61,36 +66,17 @@ public class QuestFile {
     void startQuest() {
         String userInput = "";
         while (!userInput.equals("Выйти из игры")) {
-            continueName=answersAndQuestions.keySet().stream()
+            continueName = answersAndQuestions.keySet().stream()
                     .findFirst()
                     .orElse("");
             for (String pointMenu : menu.getMenuMap().keySet()) {
                 if (!((pointMenu.equals("Сохранить игру") || pointMenu.equals("Продолжить игру")) && tempName == null
-                        || pointMenu.equals("Загрузить игру") /*&& !game.getPathSaveAndDownload().exists()*/)) {
+                        || pointMenu.equals("Загрузить игру") && !Files.exists(Path.of(pathSaveAndDownload)))) {
                     out.println(pointMenu);
                 }
             }
             userInput = scannerMenu.nextLine();
-        /*continueName = switch (userInput) {
-            case "Продолжить игру" -> game.getTempName();
-            case "Загрузить игру" -> {
-                try {
-                    yield Files.readString(get(pathSaveAndDownload));
-                } catch (IOException e) {
-                    out.println("Файл для загрузки отсутствует");
-                    throw new RuntimeException(e);
-                }
-            }*/
-
-            /*default -> questFile.getAnswersAndQuestions().keySet().stream()
-                    .findFirst()
-                    .orElse("");*/
-          /*  default -> throw new IllegalStateException("Unexpected value: " + userInput);
-        };*/
             menu.execute(userInput, this);
-            if (userInput.equals("Загрузить игру")) {
-                /*menu.execute("")*/
-            }
         }
     }
 
@@ -114,16 +100,70 @@ public class QuestFile {
         textsMap.put(nameParagraph, text);
     }
 
-    public String getReturnMenu() {
-        return RETURN_MENU;
+
+    /**
+     * Запускает игровой процесс
+     */
+    public void startGameProcess() {
+        requireNonNull(continueName);
+        Scanner scannerGame = new Scanner(in);
+        out.println(textsMap.get(continueName));
+        answersAndQuestions.get(continueName).forEach((key, value) -> {
+            out.printf("%d. ", key);
+            out.println(value);
+        });
+        if (answersAndQuestions.get(continueName).size() != 1) {
+            int userInput = scannerGame.nextInt();
+            if (userInput > answersAndQuestions.get(continueName).size() || userInput < 1) {
+                throw new IllegalArgumentException("Введенное число должно совпадать с номером одного из пунктов меню.");
+            }
+            out.println(answersAndQuestions.get(continueName).size());
+            if (userInput == answersAndQuestions.get(continueName).size()) {
+                tempName = continueName;
+            } else {
+                continueName = answersAndQuestions.get(continueName).get(userInput);
+                startGameProcess();
+            }
+        } else {
+            tempName = null;
+        }
     }
 
-    public String getContinueName() {
-        return continueName;
+    public boolean downloadGame() {
+
+        try {
+            continueName = Files.readString(get(pathSaveAndDownload));
+            if (textsMap.containsKey(continueName)) {
+                return true;
+            }
+            out.println("Загрузка не удалась");
+            return false;
+        } catch (IOException e) {
+            out.println("Файл отсутствует");
+            return false;
+        }
     }
 
-    public String getTempName() {
-        return tempName;
+    public boolean saveGame() {
+        try {
+            writeString(get(pathSaveAndDownload), tempName,
+                    StandardOpenOption.CREATE //Создать, если нет файла
+                    /* StandardOpenOption.APPEND*/); //Дозапись построчная в файле нужна будет при создании имени юзера
+        } catch (IOException e) {
+            out.println("Ошибка сохранения");
+            return false;
+        }
+        out.println("Игра сохранена.");
+        return true;
+    }
+
+    /**
+     * Изменяет начальное состояние continueName для продолжения игры
+     */
+    public void continueGame() {
+        if (tempName != null) {
+            continueName = tempName;
+        }
     }
 
     public Map<String, String> getTextsMap() {
@@ -139,17 +179,5 @@ public class QuestFile {
         return "QuestFile{, answersAndQuestions=%s}".formatted(answersAndQuestions);
     }
 
-    public String getPathSaveAndDownload() {
-        return pathSaveAndDownload;
-    }
 
-    public void setTempName(String tempName) {
-        /*Objects.requireNonNull(tempName);*/
-        this.tempName = tempName;
-    }
-
-    public void setContinueName(String continueName) {
-        Objects.requireNonNull(continueName);
-        this.continueName = continueName;
-    }
 }
