@@ -1,5 +1,9 @@
 package com.smirnov.project.courseproject2var2;
 
+import com.smirnov.project.courseproject2var2.command.ContinueGameCommand;
+import com.smirnov.project.courseproject2var2.command.DownloadGameCommand;
+import com.smirnov.project.courseproject2var2.command.SaveGameCommand;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -69,12 +73,11 @@ public class QuestFile {
             continueName = answersAndQuestions.keySet().stream()
                     .findFirst()
                     .orElse("");
-            for (String pointMenu : menu.getMenuMap().keySet()) {
-                if (!((pointMenu.equals("Сохранить игру") || pointMenu.equals("Продолжить игру")) && tempName == null
-                        || pointMenu.equals("Загрузить игру") && !Files.exists(Path.of(pathSaveAndDownload)))) {
-                    out.println(pointMenu);
-                }
-            }
+            menu.getMenuMap().entrySet().stream()
+                    .filter(entry -> !((entry.getValue() instanceof SaveGameCommand || entry.getValue() instanceof ContinueGameCommand) && tempName == null
+                    || entry.getValue() instanceof DownloadGameCommand && !Files.exists(Path.of(pathSaveAndDownload))))
+                    .map(Map.Entry::getKey)
+                    .forEach(out::println);
             userInput = scannerMenu.nextLine();
             menu.execute(userInput, this);
         }

@@ -2,9 +2,9 @@ package com.smirnov.project.courseproject2var2.command;
 
 import com.smirnov.project.courseproject2var2.QuestFile;
 
-public class ContinueGame extends Command {
+public class ContinueGameCommand extends Command {
 
-    public ContinueGame(String nameCommand) {
+    public ContinueGameCommand(String nameCommand) {
         super(nameCommand);
     }
 

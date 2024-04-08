@@ -58,10 +58,10 @@ public class Main {
         Game game = new Game();
         Menu menu = new Menu(game);
         menu.addCommand(new StartGameCommand("Начать игру"))
-                .addCommand(new ContinueGame("Продолжить игру"))
+                .addCommand(new ContinueGameCommand("Продолжить игру"))
                 .addCommand(new ExitGameCommand("Выйти из игры"))
                 .addCommand(new SaveGameCommand("Сохранить игру"))
-                .addCommand(new DownloadGame("Загрузить игру"));
+                .addCommand(new DownloadGameCommand("Загрузить игру"));
 
         QuestFile questFile = new QuestFile(menu);
         questFile.addAnswersAndQuestions(qest1, qest1Map, quest1Text);

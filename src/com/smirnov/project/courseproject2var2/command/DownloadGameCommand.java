@@ -5,10 +5,10 @@ import com.smirnov.project.courseproject2var2.QuestFile;
 
 import static java.util.Objects.requireNonNull;
 
-public class DownloadGame extends Command {
+public class DownloadGameCommand extends Command {
 
 
-    public DownloadGame(String nameCommand) {
+    public DownloadGameCommand(String nameCommand) {
         super(nameCommand);
     }
 
