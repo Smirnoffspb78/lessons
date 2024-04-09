@@ -1,111 +1,104 @@
 package com.smirnov.project.courseproject2var2;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
 import java.util.Scanner;
 
 import static java.lang.System.in;
 import static java.lang.System.out;
+import static java.nio.file.Files.writeString;
+import static java.nio.file.Paths.get;
+import static java.util.Objects.requireNonNull;
 
 /**
- * Игра.
+ * Игровой процесс
  */
 public class Game {
 
     /**
      * Путь для сохранения и загрузки названия квеста
      */
-   /* private final String pathSaveAndDownload = "C:/Java_Education/ITMO/Lessons/src/com/smirnov/project/courseproject2var2/Save Progress.txt";*/
-
-    /**
-     * Файл для сохранения и загрузки квеста.
-     */
-    /*private final File file = new File(pathSaveAndDownload);*/
+    private String pathSaveAndDownload;
 
 
-    /**
-     * Временное название квеста.
-     */
-    /*private String tempName;*/
-
-    /**
-     * Текущее название квеста.
-     */
-    /*private String continueName;*/
-
-    /**
-     * Сканер для ввода данных в игровом процессе.
-     */
-    private final Scanner scannerGame = new Scanner(in);
-
-    /**
-     * Конструктор создает игру.
-     */
-
-    public Game() {
+    public Game(String pathSaveAndDownload) {
+        requireNonNull(pathSaveAndDownload);
+        this.pathSaveAndDownload = pathSaveAndDownload;
     }
 
-
     /**
-     * Запуск игрового процесса.
-     *
-     * @param numberQuest Наименование квеста.
+     * Запускает игровой процесс
      */
-    public void startGame(String string) {
-        /*requireNonNull(questFile);
-        String numberQuest=questFile.getContinueName();
-        out.println(questFile.getTextsMap().get(numberQuest));
-        questFile.getAnswersAndQuestions().get(numberQuest).forEach((key, value) -> {
-            out.printf("%d. ", key);
-            out.println(value);
-        });
-        if (questFile.getAnswersAndQuestions().get(numberQuest).size() != 1) {
+    public void startGameProcess(Quest quest) {
+        requireNonNull(quest);
+        String continueName = quest.getContinueName();
+        Scanner scannerGame = new Scanner(in);
+        out.println(quest.getTextsMap().get(continueName));
+        int id = 0;
+        for (String value : quest.getAnswersAndQuestions().get(continueName)) {
+            out.printf("%d. %s%n", ++id, value);
+        }
+        if (quest.getAnswersAndQuestions().get(continueName).size() != 1) {
             int userInput = scannerGame.nextInt();
-            out.println(questFile.getAnswersAndQuestions().get(numberQuest).size());
-            if (userInput == questFile.getAnswersAndQuestions().get(numberQuest).size()) {
-                tempName = numberQuest;
+            if (userInput > quest.getAnswersAndQuestions().get(quest.getContinueName()).size() || userInput < 1) {
+                throw new IllegalArgumentException("Введенное число должно совпадать с номером одного из пунктов меню.");
+            }
+            if (userInput == quest.getAnswersAndQuestions().get(continueName).size()) {
+                quest.setTempName(continueName);
             } else {
-                *//*startGame(questFile.getAnswersAndQuestions()
-                        .get(numberQuest)
-                        .get(userInput));*//*
+                quest.setContinueName(quest.getAnswersAndQuestions().get(continueName).get(userInput-1));
+                startGameProcess(quest);
             }
         } else {
-            tempName = null;
-        }*/
+            quest.setTempName(null);
+        }
     }
 
-    /**
-     * Выход из игры.
-     */
-    public void exitGame() {
-        out.println("До новых встреч!");
-    }
 
     /**
-     * Сохранение игры.
-     *
-     * @return true/false Если игра сохранилась/не сохранилась
+     * Изменяет начальное состояние continueName для продолжения игры
      */
-    public boolean saveGame() {
-        /*try {
-            writeString(get(pathSaveAndDownload), tempName,
+    public void continueGame(Quest quest) {
+        if (quest.getTempName() != null) {
+            quest.setContinueName(quest.getTempName());
+            startGameProcess(quest);
+        }
+    }
+
+    public boolean downloadGame(Quest quest) {
+
+        try {
+            quest.setContinueName(Files.readString(get(pathSaveAndDownload)));
+            if (quest.getTextsMap().containsKey(quest.getContinueName())) {
+                return true;
+            }
+            out.println("Загрузка не удалась");
+            return false;
+        } catch (IOException e) {
+            out.println("Файл отсутствует");
+            return false;
+        }
+    }
+
+    public boolean saveGame(Quest quest) {
+        try {
+            writeString(get(pathSaveAndDownload), quest.getTempName(),
                     StandardOpenOption.CREATE //Создать, если нет файла
-                    *//*StandardOpenOption.APPEND*//*); //Дозапись построчная в файле нужна будет при создании имени юзера
+                    /* StandardOpenOption.APPEND*/); //Дозапись построчная в файле нужна будет при создании имени юзера
         } catch (IOException e) {
             out.println("Ошибка сохранения");
             return false;
         }
-        out.println("Игра сохранена.");*/
+        out.println("Игра сохранена.");
         return true;
-    }
-
- /*   public String getContinueName() {
-        return continueName;
-    }
-
-    public String getTempName() {
-        return tempName;
     }
 
     public String getPathSaveAndDownload() {
         return pathSaveAndDownload;
-    }*/
+    }
+
+    public void setPathSaveAndDownload(String pathSaveAndDownload) {
+        this.pathSaveAndDownload = pathSaveAndDownload;
+    }
 }

@@ -1,6 +1,6 @@
 package com.smirnov.project.courseproject2var2.command;
 
-import com.smirnov.project.courseproject2var2.QuestFile;
+import com.smirnov.project.courseproject2var2.Quest;
 
 import static java.lang.System.out;
 
@@ -14,15 +14,15 @@ public class ExitGameCommand extends Command {
      *
      * @param nameCommand наименование команды
      */
-    public ExitGameCommand(String nameCommand) {
-        super(nameCommand);
+    public ExitGameCommand(String nameCommand, Quest quest) {
+        super(nameCommand, quest);
     }
 
     /**
      * Выполнить команду.
      */
     @Override
-    public void execute(QuestFile questFile) {
+    public void execute() {
         out.println("До новых встреч!");
     }
 }

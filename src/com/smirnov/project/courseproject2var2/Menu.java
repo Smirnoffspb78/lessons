@@ -34,9 +34,8 @@ public class Menu {
         return this;
     }
 
-    public Menu(Game game) {
-        requireNonNull(game);
-        this.game = game;
+    public Menu() {
+
     }
 
     /**
@@ -44,10 +43,10 @@ public class Menu {
      * @param name Имя команды
      * @return true/false - Если команда имеется в Меню/отсутствует в меню
      */
-    public boolean execute(String name, QuestFile questFile) {
+    public boolean execute(String name) {
         requireNonNull(name);
         if (menuMap.containsKey(name)) {
-            menuMap.get(name).execute(questFile);
+            menuMap.get(name).execute();
             return true;
         } else {
             out.println("Неверная команда. Повторите ввод.");

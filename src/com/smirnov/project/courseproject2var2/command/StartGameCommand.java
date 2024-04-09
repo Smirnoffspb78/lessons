@@ -1,6 +1,6 @@
 package com.smirnov.project.courseproject2var2.command;
 
-import com.smirnov.project.courseproject2var2.QuestFile;
+import com.smirnov.project.courseproject2var2.Quest;
 
 /**
  * Команда для запуска игрового процесса.
@@ -13,15 +13,15 @@ public class StartGameCommand extends Command {
      *
      * @param nameCommand Наименование команды
      */
-    public StartGameCommand(String nameCommand) {
-        super(nameCommand);
+    public StartGameCommand(String nameCommand, Quest quest) {
+        super(nameCommand, quest);
     }
 
     /**
      * Выполнить команду.
      */
     @Override
-    public void execute(QuestFile questFile) {
-        questFile.startGameProcess();
+    public void execute() {
+        quest.getGame().startGameProcess(quest);
     }
 }

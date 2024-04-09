@@ -1,8 +1,6 @@
 package com.smirnov.project.courseproject2var2.command;
 
-import com.smirnov.project.courseproject2var2.QuestFile;
-
-import static java.util.Objects.requireNonNull;
+import com.smirnov.project.courseproject2var2.Quest;
 
 /**
  * Команда сохранения игры.
@@ -14,16 +12,15 @@ public class SaveGameCommand extends Command {
      *
      * @param nameCommand Наименование команды
      */
-    public SaveGameCommand(String nameCommand) {
-        super(nameCommand);
+    public SaveGameCommand(String nameCommand, Quest quest) {
+        super(nameCommand, quest);
     }
 
     /**
      * Выполнить команду.
      */
     @Override
-    public void execute(QuestFile questFile) {
-        requireNonNull(questFile);
-        questFile.saveGame();
+    public void execute() {
+        quest.getGame().saveGame(quest);
     }
 }

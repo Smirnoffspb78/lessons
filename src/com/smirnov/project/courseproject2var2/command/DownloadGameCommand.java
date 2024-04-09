@@ -1,25 +1,21 @@
 package com.smirnov.project.courseproject2var2.command;
 
 
-import com.smirnov.project.courseproject2var2.QuestFile;
-
-import static java.util.Objects.requireNonNull;
+import com.smirnov.project.courseproject2var2.Quest;
 
 public class DownloadGameCommand extends Command {
 
-
-    public DownloadGameCommand(String nameCommand) {
-        super(nameCommand);
+    public DownloadGameCommand(String nameCommand, Quest quest) {
+        super(nameCommand, quest);
     }
 
     /**
      * Выполнить команду.
      */
     @Override
-    public void execute(QuestFile questFile) {
-        requireNonNull(questFile);
-        if (questFile.downloadGame()) {
-            questFile.startGameProcess();
+    public void execute() {
+        if (quest.getGame().downloadGame(quest)) {
+            quest.getGame().startGameProcess(quest);
         }
     }
 }
