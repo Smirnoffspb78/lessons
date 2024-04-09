@@ -3,6 +3,7 @@ package com.smirnov.project.courseproject2var2;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
+import java.util.Objects;
 import java.util.Scanner;
 
 import static java.lang.System.in;
@@ -60,6 +61,7 @@ public class Game {
      * Изменяет начальное состояние continueName для продолжения игры
      */
     public void continueGame(Quest quest) {
+        requireNonNull(quest);
         if (quest.getTempName() != null) {
             quest.setContinueName(quest.getTempName());
             startGameProcess(quest);
@@ -67,7 +69,7 @@ public class Game {
     }
 
     public boolean downloadGame(Quest quest) {
-
+        Objects.requireNonNull(quest);
         try {
             quest.setContinueName(Files.readString(get(pathSaveAndDownload)));
             if (quest.getTextsMap().containsKey(quest.getContinueName())) {
@@ -82,9 +84,10 @@ public class Game {
     }
 
     public boolean saveGame(Quest quest) {
+        requireNonNull(quest);
         try {
             writeString(get(pathSaveAndDownload), quest.getTempName(),
-                    StandardOpenOption.CREATE //Создать, если нет файла
+                    StandardOpenOption.CREATE //Создать, если нет файла //Проверить доступ к директории и доступ к файлу как-то тоже нужно
                     /* StandardOpenOption.APPEND*/); //Дозапись построчная в файле нужна будет при создании имени юзера
         } catch (IOException e) {
             out.println("Ошибка сохранения");
@@ -99,6 +102,7 @@ public class Game {
     }
 
     public void setPathSaveAndDownload(String pathSaveAndDownload) {
+        Objects.requireNonNull(pathSaveAndDownload);
         this.pathSaveAndDownload = pathSaveAndDownload;
     }
 }

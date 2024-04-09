@@ -63,7 +63,7 @@ public class Main {
                 "одному. И как теперь поступить?";
 
         Menu menu = new Menu();
-        Game game=new Game(args[0]);
+        Game game = new Game(args[0]);
         Quest quest = new Quest(menu, game);
         quest.addAnswersAndQuestions(qest1, qest1List, quest1Text);
         quest.addAnswersAndQuestions(qest2, new ArrayList<>(), quest2Text);
@@ -82,7 +82,6 @@ public class Main {
 
 
     }
-
 
 
 }

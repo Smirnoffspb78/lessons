@@ -44,11 +44,12 @@ public class Quest {
      * Меню
      */
     private final Menu menu;
-    private final Game game/*=new Game("C:/Java_Education/ITMO/Lessons/src/com/smirnov/project/courseproject2var2/Save Progress.txt")*/;
+    private final Game game;
 
     public Quest(Menu menu, Game game) {
         requireNonNull(menu);
-        this.game=game;
+        requireNonNull(game);
+        this.game = game;
         this.menu = menu;
 
     }
@@ -87,7 +88,6 @@ public class Quest {
     }
 
 
-
     public Map<String, String> getTextsMap() {
         return textsMap;
     }
@@ -104,11 +104,13 @@ public class Quest {
     public String getContinueName() {
         return continueName;
     }
+
     public String getTempName() {
         return tempName;
     }
 
     public void setContinueName(String continueName) {
+        requireNonNull(continueName);
         this.continueName = continueName;
     }
 

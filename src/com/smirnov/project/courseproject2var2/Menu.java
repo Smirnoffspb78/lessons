@@ -19,6 +19,7 @@ public class Menu {
     private final Map<String, Command> menuMap = new LinkedHashMap<>();
 
     Game game;
+
     /**
      * Добавляет команду в Мапу
      *
@@ -40,6 +41,7 @@ public class Menu {
 
     /**
      * Выполняет команду при ее наличии в Меню.
+     *
      * @param name Имя команды
      * @return true/false - Если команда имеется в Меню/отсутствует в меню
      */
