@@ -1,8 +1,6 @@
 package com.smirnov.project.courseproject2var2.command;
 
-import com.smirnov.project.courseproject2var2.Quest;
-
-import java.util.Objects;
+import com.smirnov.project.courseproject2var2.Game;
 
 import static java.util.Objects.requireNonNull;
 
@@ -15,18 +13,18 @@ public abstract class Command {
      * Наименование команды.
      */
     private final String nameCommand;
-    Quest quest;
+    Game game;
 
     /**
      * Конструктор создает команду для игры.
      *
      * @param nameCommand Название команды
+     * @param game        Игровой процесс
      */
-    Command(String nameCommand, Quest quest) {
-        requireNonNull(nameCommand);
-        Objects.requireNonNull(quest);
-        this.nameCommand = nameCommand;
-        this.quest = quest;
+    Command(String nameCommand, Game game) {
+        this.nameCommand = requireNonNull(nameCommand);
+        this.game = requireNonNull(game);
+
     }
 
     /**

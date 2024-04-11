@@ -1,10 +1,18 @@
 package com.smirnov.project.courseproject2var2;
 
 import com.smirnov.project.courseproject2var2.command.Command;
+import com.smirnov.project.courseproject2var2.command.ContinueGameCommand;
+import com.smirnov.project.courseproject2var2.command.DownloadGameCommand;
+import com.smirnov.project.courseproject2var2.command.SaveGameCommand;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Optional;
+import java.util.Scanner;
 
+import static java.lang.System.in;
 import static java.lang.System.out;
 import static java.util.Objects.requireNonNull;
 
@@ -18,8 +26,6 @@ public class Menu {
      */
     private final Map<String, Command> menuMap = new LinkedHashMap<>();
 
-    Game game;
-
     /**
      * Добавляет команду в Мапу
      *
@@ -28,32 +34,35 @@ public class Menu {
      */
     public Menu addCommand(Command command) {
         requireNonNull(command);
-        if (menuMap.containsKey(command.getNameCommand())) {
-            return this;
-        }
-        menuMap.put(command.getNameCommand(), command);
+        menuMap.putIfAbsent(command.getNameCommand(), command);
         return this;
-    }
-
-    public Menu() {
-
     }
 
     /**
      * Выполняет команду при ее наличии в Меню.
      *
      * @param name Имя команды
-     * @return true/false - Если команда имеется в Меню/отсутствует в меню
      */
-    public boolean execute(String name) {
+    public void execute(String name) {
         requireNonNull(name);
-        if (menuMap.containsKey(name)) {
-            menuMap.get(name).execute();
-            return true;
-        } else {
-            out.println("Неверная команда. Повторите ввод.");
-            return false;
+        Optional.ofNullable(name)
+                .map(menuMap::get)
+                .ifPresentOrElse(Command::execute, () -> out.println("Неверная команда. Повторите ввод."));
+    }
+
+    public void displayMenu(Game game) {
+        String userInput = "";
+        Scanner scannerMenu = new Scanner(in);
+        while (!userInput.equals("Выйти из игры")) {
+            menuMap.entrySet().stream()
+                    .filter(entry -> !((entry.getValue() instanceof SaveGameCommand || entry.getValue() instanceof ContinueGameCommand) && game.getTempName() == null
+                            || entry.getValue() instanceof DownloadGameCommand && !Files.exists(Path.of(game.getPathSaveAndDownload()))))
+                    .map(Map.Entry::getKey)
+                    .forEach(out::println);
+            userInput = scannerMenu.nextLine();
+            execute(userInput);
         }
+        scannerMenu.close();
     }
 
     public Map<String, Command> getMenuMap() {
