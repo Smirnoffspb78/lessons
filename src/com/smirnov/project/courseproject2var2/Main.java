@@ -70,7 +70,6 @@ public class Main {
         game.addAnswersAndQuestions(qest5, new ArrayList<>(), quest5Text);
         game.addAnswersAndQuestions(qest6, qest6List, quest6Text);
         game.addAnswersAndQuestions(qest7, qest7List, quest7Text);
-        System.out.println(game.getAnswersAndQuestions());
         quest.startMenu();
 
 

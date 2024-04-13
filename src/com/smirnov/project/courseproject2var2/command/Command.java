@@ -13,16 +13,19 @@ public abstract class Command {
      * Наименование команды.
      */
     private final String nameCommand;
-    Game game;
+    /**
+     * Игровой процесс
+     */
+    protected final Game game;
 
     /**
      * Конструктор создает команду для игры.
      *
-     * @param nameCommand Название команды
+     * @param commandName Название команды
      * @param game        Игровой процесс
      */
-    Command(String nameCommand, Game game) {
-        this.nameCommand = requireNonNull(nameCommand);
+    Command(String commandName, Game game) {
+        this.nameCommand = requireNonNull(commandName);
         this.game = requireNonNull(game);
 
     }

@@ -25,11 +25,8 @@ public class Quest {
                 .addCommand(new DownloadGameCommand("Загрузить игру", game));
     }
 
-    void startMenu() {
+    public void startMenu() {
         menu.displayMenu(game);
     }
 
-    public Game getGame() {
-        return game;
-    }
 }

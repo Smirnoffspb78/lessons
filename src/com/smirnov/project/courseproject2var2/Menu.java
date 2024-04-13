@@ -43,8 +43,7 @@ public class Menu {
      *
      * @param name Имя команды
      */
-    public void execute(String name) {
-        requireNonNull(name);
+    private void execute(String name) {
         Optional.ofNullable(name)
                 .map(menuMap::get)
                 .ifPresentOrElse(Command::execute, () -> out.println("Неверная команда. Повторите ввод."));
@@ -63,9 +62,5 @@ public class Menu {
             execute(userInput);
         }
         scannerMenu.close();
-    }
-
-    public Map<String, Command> getMenuMap() {
-        return menuMap;
     }
 }

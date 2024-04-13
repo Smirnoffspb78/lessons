@@ -34,7 +34,7 @@ public class Game {
     /**
      * Ввод пользователя
      */
-    Scanner scannerGame = new Scanner(in);
+    private Scanner scannerGame = new Scanner(in);
     /**
      * Путь для сохранения и загрузки названия квеста
      */
@@ -57,24 +57,22 @@ public class Game {
      * Запускает игровой процесс
      */
     public void startGameProcess(String continueName) {
-        Objects.requireNonNull(continueName);
-        requireNonNull(answersAndQuestions);
-        requireNonNull(textsMap);
-
+        requireNonNull(continueName);
         out.println(textsMap.get(continueName));
-        for (int i = 0; i < answersAndQuestions.get(continueName).size(); i++) {
-            out.printf("%d. %s%n", i + 1, answersAndQuestions.get(continueName).get(i));
+        List<String> qestionList = answersAndQuestions.get(continueName);
+        for (int i = 0; i < qestionList.size(); i++) {
+            out.printf("%d. %s%n", i + 1, qestionList.get(i));
         }
-        if (answersAndQuestions.get(continueName).size() != 1) {
+        if (qestionList.size() != 1) {
             int userInput = scannerGame.nextInt();
-            if (userInput > answersAndQuestions.get(continueName).size() || userInput < 1) {
+            if (userInput > qestionList.size() || userInput < 1) {
                 out.println("Введено неверное число");
                 startGameProcess(continueName);
             }
-            if (userInput == answersAndQuestions.get(continueName).size()) {
+            if (userInput == qestionList.size()) {
                 tempName = continueName;
             } else {
-                continueName = answersAndQuestions.get(continueName).get(userInput - 1);
+                continueName = qestionList.get(userInput - 1);
                 startGameProcess(continueName);
             }
         } else {
@@ -89,6 +87,8 @@ public class Game {
     public void continueGame() {
         if (tempName != null) {
             startGameProcess(tempName);
+        } else {
+            out.println("Загрузка не выполнена");
         }
     }
 
@@ -135,10 +135,6 @@ public class Game {
         questions.add(RETURN_MENU);
         answersAndQuestions.putIfAbsent(nameParagraph, questions);
         textsMap.putIfAbsent(nameParagraph, text);
-    }
-
-    public Map<String, String> getTextsMap() {
-        return textsMap;
     }
 
     public Map<String, List<String>> getAnswersAndQuestions() {
