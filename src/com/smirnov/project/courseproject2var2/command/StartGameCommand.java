@@ -25,4 +25,14 @@ public class StartGameCommand extends Command {
     public void execute() {
         game.startGameProcess(game.getFirstQuest());
     }
+
+    /**
+     * Проверяет возможность вывода на экран
+     *
+     * @return true/false, если вывод доступен/не доступен
+     */
+    @Override
+    public boolean isDisplay() {
+        return true;
+    }
 }

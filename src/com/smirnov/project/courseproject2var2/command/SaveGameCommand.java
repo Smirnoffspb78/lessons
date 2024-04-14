@@ -24,4 +24,14 @@ public class SaveGameCommand extends Command {
     public void execute() {
         game.saveGame();
     }
+
+    /**
+     * Проверяет возможность вывода на экран
+     *
+     * @return true/false, если вывод доступен/не доступен
+     */
+    @Override
+    public boolean isDisplay() {
+        return game.getTempName() != null;
+    }
 }

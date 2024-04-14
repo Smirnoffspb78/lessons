@@ -10,13 +10,17 @@ import static java.util.Objects.requireNonNull;
 public class Quest {
 
     /**
-     * Меню
+     * Меню.
      */
     private final Menu menu;
-    private final Game game;
 
+    /**
+     * Конструктор создает квест.
+     *
+     * @param menu Меню
+     * @param game Игровой процесс
+     */
     public Quest(Menu menu, Game game) {
-        this.game = requireNonNull(game);
         this.menu = requireNonNull(menu);
         menu.addCommand(new StartGameCommand("Начать игру", game))
                 .addCommand(new ContinueGameCommand("Продолжить игру", game))
@@ -25,8 +29,11 @@ public class Quest {
                 .addCommand(new DownloadGameCommand("Загрузить игру", game));
     }
 
+    /**
+     * Запускает меню.
+     */
     public void startMenu() {
-        menu.displayMenu(game);
+        menu.displayMenu();
     }
 
 }

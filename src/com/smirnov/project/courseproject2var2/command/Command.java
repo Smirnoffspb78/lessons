@@ -35,6 +35,14 @@ public abstract class Command {
      */
     public abstract void execute();
 
+
+    /**
+     * Проверяет возможность вывода на экран.
+     *
+     * @return true/false, если вывод доступен/не доступен
+     */
+    public abstract boolean isDisplay();
+
     public String getNameCommand() {
         return nameCommand;
     }
@@ -55,5 +63,7 @@ public abstract class Command {
     public int hashCode() {
         return nameCommand.hashCode();
     }
+
+
 }
 

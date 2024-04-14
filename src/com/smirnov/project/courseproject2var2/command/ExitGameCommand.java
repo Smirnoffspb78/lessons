@@ -26,4 +26,14 @@ public class ExitGameCommand extends Command {
     public void execute() {
         out.println("До новых встреч!");
     }
+
+    /**
+     * Проверяет возможность вывода на экран
+     *
+     * @return true/false, если вывод доступен/не доступен
+     */
+    @Override
+    public boolean isDisplay() {
+        return true;
+    }
 }

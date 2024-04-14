@@ -9,7 +9,7 @@ public class ContinueGameCommand extends Command {
 
 
     /**
-     * Конструктор создает команду для возобновления игрового процесса
+     * Конструктор создает команду для возобновления игрового процесса.
      *
      * @param nameCommand Наименование команды
      * @param game        Игровой процесс
@@ -24,5 +24,15 @@ public class ContinueGameCommand extends Command {
     @Override
     public void execute() {
         game.continueGame();
+    }
+
+    /**
+     * Проверяет возможность вывода на экран.
+     *
+     * @return true/false, если вывод доступен/не доступен
+     */
+    @Override
+    public boolean isDisplay() {
+        return game.getTempName() != null;
     }
 }
