@@ -1,18 +1,18 @@
 package com.smirnov.project.lesson27.homework27.task1;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Arrays;
+import java.nio.file.Path;
 
 import static java.lang.Integer.parseInt;
 import static java.lang.System.out;
+import static java.nio.file.Files.newBufferedReader;
+import static java.nio.file.Paths.get;
 import static java.util.Objects.requireNonNull;
 
 /**
  * Читает файлы.
  */
-public class ReadingEvents extends Thread {
+public class ReadingEvent extends Thread {
     /**
      * Путь к файлу.
      */
@@ -29,7 +29,7 @@ public class ReadingEvents extends Thread {
     /**
      * Позиция текстового описания.
      */
-    private final int positionText;
+    private static final int POSITION_TEXT = 2;
     /**
      * Разделитель
      */
@@ -48,51 +48,31 @@ public class ReadingEvents extends Thread {
      * @param separator        Разделитель
      * @param levelPriority    Уровень приоритета
      */
-    public ReadingEvents(String pathFile, int positionPriority, String separator, int levelPriority) {
+    public ReadingEvent(String pathFile, int positionPriority, String separator, int levelPriority) {
         this.pathFile = requireNonNull(pathFile);
         this.separator = requireNonNull(separator);
         if (positionPriority < 1 || levelPriority < 1 || positionPriority > 10 || levelPriority > 10) {
             throw new IllegalArgumentException("levelPriority и positionPriority должны иметь значения от 1 до 10 включительно");
         }
         this.positionPriority = positionPriority;
-        this.positionText = 2;
         this.levelPriority = levelPriority;
     }
 
     @Override
     public void run() {
         countPriority = 0;
-        try (FileInputStream fileInputStream = new FileInputStream(pathFile)) {
-            byte[] readFile = new byte[fileInputStream.available()];
-            fileInputStream.read(readFile);
-            String stringRead = new String(readFile);
-            String[] arrLine = stringRead.split("\n");
-            Arrays.stream(arrLine).map(s -> s.split(separator))
-                    .filter(arrSplit -> parseInt(arrSplit[positionPriority]) >= levelPriority)
-                    .forEach(arrSplit -> {
-                        out.println(arrSplit[positionText]);
+        try {
+            newBufferedReader(Path.of(pathFile))
+                    .lines()
+                    .map(string -> string.split(separator))
+                    .filter(strings -> parseInt(strings[positionPriority]) >= levelPriority)
+                    .forEach(strings -> {
+                        out.println(strings[POSITION_TEXT]);
                         countPriority++;
                     });
-        } catch (FileNotFoundException e) {
-            out.println("Файл отсутствует");
+            out.println("В файле"+get(pathFile).getFileName()+" количество задач с приоритетом "+levelPriority+" и выше: "+countPriority);
         } catch (IOException e) {
-            out.println("Чтение не доступно");
+            out.println("Файл не доступен для чтения");
         }
-    }
-
-    public String getPathFile() {
-        return pathFile;
-    }
-
-    public int getPositionPriority() {
-        return positionPriority;
-    }
-
-    public int getLevelPriority() {
-        return levelPriority;
-    }
-
-    public int getCountPriority() {
-        return countPriority;
     }
 }
