@@ -1,5 +1,7 @@
 package com.smirnov.project.lesson13.homework13;
 
+import static java.lang.System.out;
+
 /**
  * Возможность пить.
  */
@@ -19,7 +21,7 @@ public class Drink extends Action {
      */
     @Override
     public void execute() {
-        System.out.println("Animal to drink.");
-        nextAction(getAction());
+        out.println("Animal to drink.");
+        super.execute();
     }
 }

@@ -1,5 +1,7 @@
 package com.smirnov.project.lesson13.homework13;
 
+import static java.lang.System.out;
+
 /**
  * Возможность есть.
  */
@@ -19,10 +21,8 @@ public class Eat extends Action {
      */
     @Override
     public void execute() {
-        System.out.println("Animal to eat.");
-        if (getAction() != null) {
-            nextAction(getAction());
-        }
+        out.println("Animal to eat.");
+        super.execute();
     }
 
 }

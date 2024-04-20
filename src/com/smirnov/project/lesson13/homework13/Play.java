@@ -1,5 +1,7 @@
 package com.smirnov.project.lesson13.homework13;
 
+import static java.lang.System.out;
+
 /**
  * Возможность играть.
  */
@@ -18,7 +20,7 @@ public class Play extends Action {
      */
     @Override
     public void execute() {
-        System.out.println("Animal to play.");
-        nextAction(getAction());
+        out.println("Animal to play.");
+        super.execute();
     }
 }

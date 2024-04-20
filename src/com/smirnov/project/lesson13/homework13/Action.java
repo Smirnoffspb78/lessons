@@ -17,21 +17,18 @@ public abstract class Action implements Execute {
         this.action = action;
     }
 
-    /**
-     * Переходит к следующему действию.
-     *
-     * @param action Следующее действие
-     */
 
-    public boolean nextAction(Action action) {
+    public void execute() {
         if (action != null) {
-            action.execute();
-            return true;
+            nextAction();
         }
-        return false;
     }
 
-    public Action getAction() {
-        return action;
+    /**
+     * Переходит к следующему действию.
+     */
+
+    private void nextAction() {
+        action.execute();
     }
 }
