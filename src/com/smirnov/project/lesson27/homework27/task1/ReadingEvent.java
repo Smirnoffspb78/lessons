@@ -70,7 +70,7 @@ public class ReadingEvent extends Thread {
                         out.println(strings[POSITION_TEXT]);
                         countPriority++;
                     });
-            out.println("В файле"+get(pathFile).getFileName()+" количество задач с приоритетом "+levelPriority+" и выше: "+countPriority);
+            out.println("В файле" + get(pathFile).getFileName() + " количество задач с приоритетом " + levelPriority + " и выше: " + countPriority);
         } catch (IOException e) {
             out.println("Файл не доступен для чтения");
         }
