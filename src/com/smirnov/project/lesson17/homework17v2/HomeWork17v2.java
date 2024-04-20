@@ -70,9 +70,6 @@ public class HomeWork17v2 {
      *
      * @param vehicle    Транспортные средства
      * @param mapRepaint Map, где ключ - цвет, список - транспортные средства с цветом по ключу
-
-     * @param T          extends Vehicle & Repaintable
-
      */
     public static <T extends Vehicle & Repaintable> void repaintVehicle(List<T> vehicle, Map<Repaintable.Color, List<T>> mapRepaint) {
         Objects.requireNonNull(vehicle);
@@ -91,7 +88,6 @@ public class HomeWork17v2 {
      *
      * @param listVehicle Список транспортных средств
      * @param T           extends Vehicle
-
      * @return Map, где ключ - номер транспортного средства, значение - транспортное средство
      */
     public static <T extends Vehicle> Map<String, T> vehicleRepair(List<T> listVehicle) {
@@ -102,9 +98,6 @@ public class HomeWork17v2 {
         Map<String, T> mapVehicle = new HashMap<>();
         for (T t : listVehicle) {
             Objects.requireNonNull(t);
-            t.repair();
-            mapVehicle.put(t.getNumber(), t);
-
             if (!mapVehicle.containsKey(t.getNumber())) {
                 t.repair();
                 mapVehicle.put(t.getNumber(), t);
@@ -128,12 +121,11 @@ public class HomeWork17v2 {
         Map<String, ? super Vehicle> mapVehicle = new HashMap<>();
         for (Vehicle t : listVehicle) {
             Objects.requireNonNull(t);
-            t.repair();
-            mapVehicle.put(t.getNumber(), t);
             if (!mapVehicle.containsKey(t.getNumber())) {
                 t.repair();
                 mapVehicle.put(t.getNumber(), t);
             }
+
         }
         return mapVehicle;
     }

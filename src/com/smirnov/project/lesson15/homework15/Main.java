@@ -68,6 +68,7 @@ public class Main {
         System.out.println("Отсортированный склад по количеству фруктов функцией: " +
                 fruitStorage.compareFruit((fruit1, fruit2) -> (fruit2.getCount() - fruit1.getCount())));
 
+
         System.out.println("Отсортированный склад по количеству фруктов с помощью дефолтного метода: " +
                 fruitStorage.compareFruit(Comparator.comparingInt(FruitToStorageInfo::getCount).reversed()));
 
@@ -79,8 +80,10 @@ public class Main {
         System.out.println("Отсортированный склад по типу с помощью функции"
                 + fruitStorage.compareFruit((fruit1, fruit2) -> fruit2.getType().compareTo(fruit1.getType())));
 
+
         System.out.println("Отсортированный склад по типу с помощью дефолтного метода"
                 + fruitStorage.compareFruit(Comparator.comparing(FruitToStorageInfo::getType)));
+
 
         Comparator<FruitToStorageInfo> comparatorPrice = new ComparatorsFruits.PriceOfFruit();
         System.out.println("Отсортированный склад по стоимости" + fruitStorage.compareFruit(comparatorPrice));
@@ -88,8 +91,10 @@ public class Main {
         System.out.println("Отсортированный склад по стоимости с помощью функции"
                 + fruitStorage.compareFruit((fruit1, fruit2)-> Double.compare(fruit1.getPrice(), fruit2.getPrice())));
 
+
         System.out.println("Отсортированный склад по стоимости с помощью дефолтного метода"
                 + fruitStorage.compareFruit(Comparator.comparingDouble(FruitToStorageInfo::getPrice)));
+
 
         Comparator<FruitToStorageInfo> comparatorNumberAndPrice = new ComparatorsFruits.NumberAndPriceFruit();
         System.out.println("Склад, отсортированный пок количеству по возрастанию и по убыванию цены" + fruitStorage.compareFruit(comparatorNumberAndPrice));
@@ -101,6 +106,7 @@ public class Main {
             }
             return fruit1.getCount() - fruit2.getCount();
         }));
+
         Comparator comparatorOfCount=Comparator.comparingInt(FruitToStorageInfo::getCount);
         Comparator comparatorOfPrice=Comparator.comparingDouble(FruitToStorageInfo::getPrice).reversed();
 
