@@ -17,7 +17,7 @@ public class ThreadWrite extends Thread {
      * Склады
      */
     private final Storage[] storages;
-    String pathSave ;
+    private final String pathSave;
 
 
     /**
@@ -32,9 +32,10 @@ public class ThreadWrite extends Thread {
 
     @Override
     public void run() {
+
         Arrays.stream(storages)
                 .map(Storage::getProductsList).forEach(productsList -> productsList.stream()
-                        .map(product -> "%d: %d\n".formatted(product.getId(), product.getQuantity()))
+                        .map(product -> "%d: %d\n".formatted(product.id(), product.quantity()))
                         .forEach(temp -> {
                             try {
                                 writeString(get(pathSave), temp,

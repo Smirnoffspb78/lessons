@@ -4,25 +4,13 @@ import java.util.Objects;
 
 /**
  * Продукт.
+ *
+ * @param id          Идентификатор продукта.
+ * @param productName Наименование продукта.
+ * @param price       Стоимость.
+ * @param quantity    Количество.
  */
-public class Product {
-
-    /**
-     * Идентификатор продукта.
-     */
-    private int id;
-    /**
-     * Наименование продукта.
-     */
-    private final String productName;
-    /**
-     * Стоимость.
-     */
-    private final double price;
-    /**
-     * Количество.
-     */
-    private final int quantity;
+public record Product(int id, String productName, double price, int quantity) {
 
     public Product(int id, String productName, double price, int quantity) {
         if (price <= 0 || quantity < 0 || id < 0 || productName == null || productName.isBlank()) {
@@ -34,28 +22,18 @@ public class Product {
         this.quantity = quantity;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public String getProductName() {
-        return productName;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
     @Override
     public boolean equals(Object o) {
-        if (this == o) {return true;}
-        if (!(o instanceof Product product)) {return false;}
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Product product)) {
+            return false;
+        }
 
-        if (id != product.id) return false;
+        if (id != product.id) {
+            return false;
+        }
         return productName.equals(product.productName);
     }
 
