@@ -2,7 +2,9 @@ package com.smirnov.project.lesson27.homework27.task2;
 
 import java.io.IOException;
 import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static java.lang.System.out;
 import static java.nio.file.Files.writeString;
@@ -32,6 +34,13 @@ public class ThreadWrite extends Thread {
 
     @Override
     public void run() {
+        List<String> writeList=new ArrayList<>();
+        Arrays.stream(storages)
+                .map(Storage::getProductsList).forEach(productsList -> productsList.stream()
+                        .map(product -> "%d: %d\n".formatted(product.id(), product.quantity()))
+                        .forEach(writeList::add));
+        String stringtest="grgrgr";
+        /*Files.write(pathSave, stringtest, StandardOpenOption.CREATE,  StandardOpenOption.APPEND);*/
         Arrays.stream(storages)
                 .map(Storage::getProductsList).forEach(productsList -> productsList.stream()
                         .map(product -> "%d: %d\n".formatted(product.id(), product.quantity()))

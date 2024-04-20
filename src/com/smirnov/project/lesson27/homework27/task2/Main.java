@@ -27,7 +27,6 @@ public class Main {
         threadWrite.setDaemon(true);
         threadWrite.start();
         Map<String, Set<Product>> productMap = new HashMap<>();
-        ;
         for (int i = 0; i < args.length; i++) {
             for (int j = 0; j < storages[i].getProductsList().size(); j++) {
                 Product product = storages[i].getProductsList().get(j);
@@ -35,11 +34,6 @@ public class Main {
                 /*productMap.computeIfAbsent(product.productName(), ()->new TreeSet<>(Comparator.comparingDouble(Product::price)).add(product));*/
                 productMap.get(product.productName()).add(product);
             }
-        }
-        try {
-            threadWrite.join(5000);
-        } catch (InterruptedException e) {
-            out.println("Поток в режиме ожидания");
         }
     }
 }
