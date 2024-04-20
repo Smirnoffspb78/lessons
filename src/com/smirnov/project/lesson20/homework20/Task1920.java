@@ -25,14 +25,15 @@ public class Task1920 {
         Article article = new Article("Статья0", FOOD, author, author2, author3);
         Article article2 = new Article("Статья1", HISTORY, author, author2, author3, author4, author5, author5);
         Article article3 = new Article("Статья3", HISTORY, author6);
-        Article article4 = new Article(null, HISTORY, author6);
+       /* Article article4 = new Article(null, HISTORY, author6);*/
 
-        List<Article> articles = new ArrayList<>();
-        articles.add(article);
-        articles.add(article2);
-        articles.add(article3);
-        articles.add(article4);
-        articles.add(null);
+        List<Article> articles = List.of(
+                article,
+                article2,
+                article3
+        );
+
+
 
         System.out.println(task01(articles));
         System.out.println(task02(articles, HISTORY));
@@ -50,8 +51,9 @@ public class Task1920 {
         return articles.stream()
                 .filter(Objects::nonNull)
                 .flatMap(article -> article.getAuthors().values().stream().distinct())
-                .filter(author -> author != null && author.getBirth() != null && LocalDate.now().isAfter(author.getBirth()))
-                .mapToDouble(author -> LocalDate.now().getYear() - author.getBirth().getYear()).average().getAsDouble();
+                .mapToDouble(author -> LocalDate.now().getYear() - author.getBirth().getYear())
+                .average()
+                .orElseGet(()->0);
     }
 
     public static List<String> task02(List<Article> articles, Article.Category category) {
@@ -61,7 +63,6 @@ public class Task1920 {
                 .filter(article -> article != null && article.getCategory() == category)
                 .flatMap(article -> article.getAuthors().values().stream())
                 .distinct()
-                .filter(author -> author != null && author.getEmail() != null && !author.getEmail().isBlank())
                 .map(Author::getEmail).collect(Collectors.toList());
 
     }
@@ -74,7 +75,8 @@ public class Task1920 {
         return articles.stream()
                 .filter(article -> article != null && article.getCategory() == category)
                 .distinct()
-                .filter(article -> article.getAuthors().values().stream()
+                .filter(article -> !article.getAuthors().isEmpty() &&
+                article.getAuthors().values().stream()
                         .filter(author -> author != null && author.getBirth() != null)
                         .allMatch(author -> year - author.getBirth().getYear() <= max && year - author.getBirth().getYear() >= min))
                 .collect(Collectors.toList());
@@ -82,9 +84,7 @@ public class Task1920 {
 
     public static List<Article> task04(List<Article> articles, Article.Category category) {
         Objects.requireNonNull(articles);
-        if (articles.isEmpty()) {
-            return new ArrayList<>();
-        }
+        Objects.requireNonNull(category);
         // Вернуть список статей категории == category, опубликованных сегодня
         return articles.stream()
                 .filter(article -> article!=null && article.getCategory() == category)

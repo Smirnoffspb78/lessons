@@ -1,6 +1,7 @@
 package com.smirnov.project.lesson20.homework20;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Author {
     private final String name;
@@ -8,8 +9,12 @@ public class Author {
     private final LocalDate birth;
 
     public Author(String name, String email, LocalDate birth) {
-        this.name = name;
-        this.email = email;
+        this.name = Objects.requireNonNull(name);
+        this.email = Objects.requireNonNull(email);
+        Objects.requireNonNull(birth);
+        if (!LocalDate.now().isAfter(birth)) {
+            throw new IllegalArgumentException();
+        }
         this.birth = birth;
     }
 
